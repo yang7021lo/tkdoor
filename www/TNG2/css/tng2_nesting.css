@@ -1,0 +1,132 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f6f6f6}
+
+.topbar{
+  position:sticky;top:0;z-index:10;
+  background:#fff;border-bottom:1px solid #ddd;
+  padding:10px;display:flex;gap:10px;align-items:center
+}
+.topbar b{font-size:16px}
+.topbar select,.topbar button{
+  height:34px;border:1px solid #ccc;
+  border-radius:6px;padding:0 10px;font-weight:700
+}
+.materialTabs{display:flex;gap:6px;flex-wrap:wrap}
+.mat-btn{
+  height:30px;border:1px solid #bbb;border-radius:999px;
+  padding:0 10px;background:#f4f4f4;font-weight:700
+}
+.mat-btn.active{background:#222;color:#fff;border-color:#222}
+#stat{margin-left:auto;font-size:12px;color:#666}
+
+.wrap{height:calc(100vh - 52px);display:flex;padding:6px;gap:6px}
+#left,#right{background:#fff;border-radius:8px;overflow:hidden}
+#left{width:40%}
+#right{width:60%;overflow-y:auto}
+
+iframe{width:100%;height:100%;border:0}
+
+/* =========================
+   Split.js Gutter (확실하게)
+========================= */
+.gutter{
+  background:#000;          /* 검은색 */
+}
+
+.gutter.gutter-horizontal{
+  width:18px;               /* ⬅️ 에어리어 넓힘 */
+  cursor:col-resize;
+  background:#000;
+  position:relative;
+}
+
+/* 중앙 핸들 표시 (시각적 가이드) */
+.gutter.gutter-horizontal::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:4px;
+  height:48px;
+  background:#fff;          /* 검은 바탕 + 흰 손잡이 */
+  transform:translate(-50%,-50%);
+  border-radius:2px;
+}
+
+
+.sheetList{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  padding:12px
+}
+.sheetCard{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:10px;
+  background:#fff
+}
+.sheetHead{
+  display:flex;
+  justify-content:space-between;
+  font-weight:900;
+  margin-bottom:6px
+}
+canvas{width:100%;display:block}
+@media print{
+  /* ✅ 크롬/엣지 인쇄: A4 세로 고정 */
+  @page{
+    size: A4 portrait;
+    margin: 8mm;   /* 여백 줄여서 더 크게 */
+  }
+
+  /* 화면용 UI 숨김 */
+  .topbar, #left, .gutter { display:none !important; }
+
+  body{ background:#fff !important; }
+  .wrap{ height:auto !important; padding:0 !important; background:#fff !important; }
+  #right{ width:100% !important; overflow:visible !important; }
+
+  /* ✅ 시트 리스트는 인쇄에서 흐르게 */
+  .sheetList{ padding:0 !important; gap:0 !important; }
+
+  /* ✅ 1페이지에 2개만: 3번째부터 자동 페이지 분리 */
+  .sheetCard{
+    border:none !important;
+    border-radius:0 !important;
+    padding:0 !important;
+    margin:0 0 6mm 0 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* ✅ 핵심: 2개 단위로 페이지 나누기 */
+  .sheetCard:nth-child(2n){
+    page-break-after: always;
+    break-after: page;
+  }
+
+  /* 마지막은 굳이 넘기지 말기 */
+  .sheetCard:last-child{
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  /* ✅ 캔버스가 작게 찍히는 원인 제거: 인쇄에서 폭을 강제 */
+  canvas{
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* ✅ 카드 안 캔버스 박스도 꽉 차게 */
+  .canvasWrap{
+    border:none !important;
+    margin:0 !important;
+  }
+}
+
+@media print{
+  .sheetCard{
+    min-height: 130mm;  /* ✅ 2개가 1페이지에 들어가게 기준 잡기 */
+  }
+}

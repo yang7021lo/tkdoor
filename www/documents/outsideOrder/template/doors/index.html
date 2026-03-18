@@ -1,0 +1,99 @@
+
+
+        <div class="header">
+            <div class="title">도어</div>
+            <div class="logo">
+                <img src="/documents/outsideOrder/logo.svg" alt="태광도어 로고" style="height:40px;">
+            </div>
+        </div>
+
+        <table class="my-2 print-block">
+            <thead>
+                <tr>
+                    <th style="width:6%;">#</th>
+                    <th class="txt-left">제품명</th>
+                    <th class="txt-left" style="width:14%;">가격여부</th>
+                    <th class="txt-left" style="width:11%;">도어타입</th>
+                    <th class="txt-left" style="width:8%;">규격</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 1행: 번호(rowspan 유지) + 제품명 + (오른쪽 전체를 감싸는 셀 안에 '위치' 한 줄짜리 독립 테이블) -->
+                <tr>
+                    <td rowspan="5" style="width:6%;">{doors.seq}</td>
+                    <td class="txt-left">{doors.name}</td>
+                    <td class="txt-left">{doors.priceType}</td>
+                    <td class="txt-left">{doors.doorType}</td>
+                    <td class="txt-left">{doors.spec}</td>
+                </tr>
+
+                <!-- 2행: 헤더 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <thead>
+                                <tr>
+                                    <th style="width:18%;">도어가로</th>
+                                    <th style="width:18%;">도어세로</th>
+                                    <th style="width:18%;">도어유리가로</th>
+                                    <th style="width:18%;">도어유리세로</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- 3행: 데이터 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <tbody>
+                                <tr>
+                                    <td style="width:18%;">{doors.doorW}</td>
+                                    <td style="width:18%;">{doors.doorH}</td>
+                                    <td style="width:18%;">{doors.glassW}</td>
+                                    <td style="width:18%;">{doors.glassH}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <!-- 2행: 헤더 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <thead>
+                                <tr>
+                                    <th style="width:18%;">도어 단가</th>
+                                    <th style="width:10%;">수량</th>
+                                    <th style="width:18%;">추가금액</th>
+                                    <th style="width:18%;">전체금액</th>
+                                    <th style="width:10%;">할인율</th>
+                                    <th style="width:18%;">할인가</th>
+                                    <th style="width:18%;">도어 최종가 (KRW)</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- 3행: 데이터 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <tbody>
+                                <tr>
+                                    <td style="width:18%;" data-unit="원">{doors.unitPrice}</td>
+                                    <td style="width:10%;" data-unit="개">{doors.quantity}</td>
+                                    <td style="width:18%;" data-unit="원">{doors.extraAmount}</td>
+                                    <td style="width:18%;" data-unit="원">{doors.grossAmount}</td>
+                                    <td style="width:10%;" data-unit="%">{doors.discountRate}</td>
+                                    <td style="width:18%;" data-unit="원">{doors.discountAmount}</td>
+                                    <td style="width:18%;" data-unit="원">{doors.finalAmount}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>

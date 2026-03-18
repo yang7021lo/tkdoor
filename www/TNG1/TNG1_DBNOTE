@@ -1,0 +1,1677 @@
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  1, N'기본',
+  0, N'픽스없음',
+  1, N'외도어',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  2, N'인서트 타입(T형)',
+  1, N'좌픽스',
+  2, N'외도어 상부남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  3, N'픽스바 없는 타입',
+  2, N'우픽스',
+  3, N'외도어 상부남마 중간소대',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  4, N'자동홈바 없는 타입',
+  3, N'좌+우 픽스',
+  4, N'양개',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  4, N'좌+좌 픽스',
+  5, N'양개 상부남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  5, N'우+우 픽스',
+  6, N'양개 상부남마 중간소대',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  6, N'좌1+우2 픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  7, N'좌2+우1 픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  8, N'좌2+우2 픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  9, N'편개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  10, N'양개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  11, N'고정창',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  12, N'편개_상부남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  13, N'양개_상부남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  14, N'고정창_상부남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  15, N'편개_상부남마_중',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  16, N'좌_편개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  17, N'우_편개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  18, N'좌_양개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  19, N'우_양개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  20, N'좌_픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  21, N'우_픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  22, N'좌_편개_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  23, N'우_편개_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  24, N'좌_양개_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  25, N'우_양개_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  26, N'좌_픽스_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  27, N'우_픽스_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  28, N'편개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  29, N'양개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  30, N'고정창_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  31, N'편개_상부남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  32, N'양개_상부남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  33, N'고정창_상부남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  34, N'편개_상부남마_중_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  35, N'좌_편개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  36, N'우_편개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  37, N'좌_양개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  38, N'우_양개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  39, N'좌_픽스_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  40, N'우_픽스_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  41, N'좌_편개_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  42, N'우_편개_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  43, N'좌_양개_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  44, N'우_양개_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  45, N'좌_픽스_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  46, N'우_픽스_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  5, N'우+우 픽스',
+  6, N'양개 상부남마 중간소대',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  6, N'좌1+우2 픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  7, N'좌2+우1 픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  8, N'좌2+우2 픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  9, N'편개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  10, N'양개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  11, N'고정창',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  12, N'편개_상부남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  13, N'양개_상부남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  14, N'고정창_상부남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  15, N'편개_상부남마_중',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  16, N'좌_편개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  17, N'우_편개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  18, N'좌_양개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  19, N'우_양개',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  20, N'좌_픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  21, N'우_픽스',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  22, N'좌_편개_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  23, N'우_편개_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  24, N'좌_양개_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  25, N'우_양개_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  26, N'좌_픽스_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  27, N'우_픽스_남마',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  28, N'편개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  29, N'양개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  30, N'고정창_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  31, N'편개_상부남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  32, N'양개_상부남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  33, N'고정창_상부남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  34, N'편개_상부남마_중_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  35, N'좌_편개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  36, N'우_편개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  37, N'좌_양개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  38, N'우_양개_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  39, N'좌_픽스_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  40, N'우_픽스_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  41, N'좌_편개_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  42, N'우_편개_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  43, N'좌_양개_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  44, N'우_양개_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  45, N'좌_픽스_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+INSERT INTO tk_frametype  (
+  GREEM_BASIC_TYPE, GREEM_BASIC_TYPEname,
+  GREEM_FIX_TYPE, GREEM_FIX_TYPEname,
+  greem_o_type, greem_o_typename,
+  GREEM_HABAR_TYPE, GREEM_HABAR_TYPEname,
+  GREEM_MBAR_TYPE, GREEM_MBAR_TYPEname,
+  GREEM_LB_TYPE, GREEM_LB_TYPEname,
+  midx, mdate
+) VALUES (
+  0, N'',
+  46, N'우_픽스_남마_박스라인',
+  0, N'',
+  0, N'',
+  0, N'',
+  0, N'',
+  1, getdate()
+);
+
+
+
+
+
+INSERT INTO tk_frame (fname, GREEM_F_A, GREEM_BASIC_TYPE, GREEM_FIX_TYPE)
+VALUES 
+(N'좌_편개', 1, 5, 16),
+(N'우_편개', 1, 5, 17),
+(N'좌_양개', 1, 5, 18),
+(N'우_양개', 1, 5, 19),
+(N'좌_픽스', 1, 5, 20),
+(N'우_픽스', 1, 5, 21),
+(N'좌_편개_남마', 1, 5, 22),
+(N'우_편개_남마', 1, 5, 23),
+(N'좌_양개_남마', 1, 5, 24),
+(N'우_양개_남마', 1, 5, 25),
+(N'좌_픽스_남마', 1, 5, 26),
+(N'우_픽스_남마', 1, 5, 27),
+(N'편개_박스라인', 1, 5, 28),
+(N'양개_박스라인', 1, 5, 29),
+(N'고정창_박스라인', 1, 5, 30),
+(N'편개_상부남마_박스라인', 1, 5, 31),
+(N'양개_상부남마_박스라인', 1, 5, 32),
+(N'고정창_상부남마_박스라인', 1, 5, 33),
+(N'편개_상부남마_중_박스라인', 1, 5, 34),
+(N'좌_편개_박스라인', 1, 5, 35),
+(N'우_편개_박스라인', 1, 5, 36),
+(N'좌_양개_박스라인', 1, 5, 37),
+(N'우_양개_박스라인', 1, 5, 38),
+(N'좌_픽스_박스라인', 1, 5, 39),
+(N'우_픽스_박스라인', 1, 5, 40),
+(N'좌_편개_남마_박스라인', 1, 5, 41),
+(N'우_편개_남마_박스라인', 1, 5, 42),
+(N'좌_양개_남마_박스라인', 1, 5, 43),
+(N'우_양개_남마_박스라인', 1, 5, 44),
+(N'좌_픽스_남마_박스라인', 1, 5, 45),
+(N'우_픽스_남마_박스라인', 1, 5, 46);

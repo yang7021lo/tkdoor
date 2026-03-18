@@ -1,0 +1,92 @@
+/*────────────────────────*/
+/* 모바일 전용 CSS (≤767px) */
+/*────────────────────────*/
+@media only screen and (max-width: 767px) {
+  /* A4 컨테이너: 화면 꽉 채우기, 패딩/그림자 축소 */
+  .a4-page {
+    width: 100% !important;
+    padding: 1rem !important;
+    box-shadow: none !important;
+    overflow-x: hidden !important;
+  }
+
+  /* 헤더 */
+  header {
+    padding: 1rem !important;
+  }
+  header .title {
+    font-size: 1.8rem !important;
+  }
+  .meta-info {
+    font-size: 0.8rem !important;
+  }
+
+  /* 프로젝트 & 총액 카드: full-width, 세로 정렬 */
+  .project-card,
+  .total-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 1rem !important;
+  }
+
+  /* 카드 내부 패딩/폰트 축소 */
+  .project-card,
+  .project-card .item,
+  .total-card {
+    padding: 0.75rem !important;
+  }
+  .project-card .label,
+  .project-card .value,
+  .total-card .amount {
+    font-size: 0.85rem !important;
+  }
+
+  /* 테이블 가독성 최적화 */
+  .table-responsive {
+    font-size: 0.85rem !important;
+  }
+  .table th,
+  .table td {
+    padding: 0.4rem !important;
+  }
+
+  /* 항목 카드 헤더/속성칩 */
+  .card-header {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.9rem !important;
+  }
+  .card.border {
+    width: 4.5rem !important;
+  }
+  .card.border .card-body {
+    padding: 0.25rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* 합계표 */
+  .section.d-flex.justify-content-end {
+    justify-content: center !important;
+  }
+  .section.d-flex.justify-content-end table {
+    width: 100% !important;
+  }
+  .section.d-flex.justify-content-end th,
+  .section.d-flex.justify-content-end td {
+    padding: 0.5rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* 푸터 */
+  footer {
+    font-size: 0.75rem !important;
+    padding: 0.75rem !important;
+  }
+
+  /* Print 버튼 */
+  .print-btn {
+    bottom: 0.5rem !important;
+    right: 0.5rem !important;
+    padding: 0.4rem 0.6rem !important;
+    font-size: 0.9rem !important;
+  }
+}

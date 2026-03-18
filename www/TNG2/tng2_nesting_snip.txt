@@ -1,0 +1,25 @@
+<%@ codepage="65001" language="vbscript"%>
+<%
+Session.CodePage="65001"
+Response.CharSet="utf-8"
+%>
+<!--#include virtual="/inc/dbcon.asp"-->
+<!--#include virtual="/inc/cookies.asp"-->
+<%
+call dbOpen()
+
+cidx  = Request("cidx")
+sjidx = Request("sjidx")
+sjmidx = Request("sjmidx")
+ response.write "<!-- DEBUG PARENT cidx=" & cidx & " sjmidx=" & sjmidx & " sjidx=" & sjidx & " -->"
+
+
+If sjidx = "" Then
+  Response.Write "<script>alert('sjidx ?ÑÎùΩ');history.back();</script>"
+  Response.End
+End If
+
+Function JsonEscape(s)
+  If IsNull(s) Then s = ""
+  s = CStr(s)
+  s = Replace(s, "\", "\\")

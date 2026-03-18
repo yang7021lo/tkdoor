@@ -1,0 +1,14 @@
+# OCR MVP Python Dependencies
+# pip install -r requirements.txt --break-system-packages
+
+# Core OCR
+pytesseract>=0.3.10
+opencv-python>=4.8.0
+numpy>=1.24.0
+
+# Optional: Flask API (Phase 2)
+# flask>=3.0.0
+# flask-cors>=4.0.0
+
+# Optional: Image enhancement
+# pillow>=10.0.0

@@ -1,0 +1,137 @@
+<div class="container invoice">
+  <div class="header">
+    <div class="logo">{issuer.name}</div>
+    <div class="logo">
+      <img src="/documents/outsideOrder/logo.svg" alt="{issuer.name} 로고" style="height:40px;">
+    </div>
+  </div>
+
+  <div class="details mt-2">
+    <div class="company-info">
+      <img src="{issuer.sealPayload}" alt="회사 직인" class="stamp">
+      <strong>주식회사 {issuer.name}</strong><br>
+      {issuer.address}<br>
+      사업자번호: {issuer.bizNo}<br>
+      대표: {issuer.representative}
+    </div>
+    <div></div>
+    <div class="company-contact">
+      <strong>{client.name}</strong><br>
+      {client.address}<br>
+      {client.bizNo}
+    </div>
+  </div>
+
+  <div class="line"></div>
+  <div class="details">
+    <div><strong>시공장소</strong><br>{location}</div>
+    <div style="width:15%;"><strong>견적번호</strong><br>{quoteNo}</div>
+    <div style="width:13%;"><strong>견적일</strong><br>{quoteDate}</div>
+  </div>
+  <div class="line"></div>
+
+  <table class="my-2 w-100" style="border-collapse:collapse; table-layout:fixed;">
+    <thead>
+      <tr>
+        <th style="width:5%;">#</th>
+        <th class="txt-left">제품명</th>
+        <th>위치</th>
+        <th style="width:8%;" data-unit="mm">가로</th>
+        <th style="width:7%;" data-unit="mm">세로</th>
+        <th>재질 및 도장</th>
+        <th style="width:10%;">단가</th>
+        <th style="width:5%;" data-unit="EA">수량</th>
+        <th style="width:12%;">공급가<br><span style="font-size:0.8em; color:#888;">(할인포함)</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-body">
+        <td>{seq}</td>
+        <td>{items[name]}</td>
+        <td>{items[loc1]} / {items[loc2]}</td>
+        <td class="text-end">{items[measuredSizeW]}</td>
+        <td class="text-end">{items[measuredSizeH]}</td>
+        <td>{items[material]} &amp; {items[coating]}</td>
+        <td class="text-end">{items[unitPrice]}</td>
+        <td class="text-end">{items[quantity]}</td>
+        <td class="text-end">{items[lineAmount]}<br><span style="font-size:0.8em; color:#888;">(-{items[discountPrice]})</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table id="table-options" class="my-2" style="border-collapse:collapse; table-layout:fixed;">
+    <thead>
+      <tr>
+        <th style="width:5%;">#</th>
+        <th class="txt-left">옵션명</th>
+        <th>단가</th>
+        <th style="width:7%;">수량</th>
+        <th>총액</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 반드시 display:none 으로 숨겨둬야 JS가 복제해서 씁니다 -->
+      <tr class="table-body-option" style="display:none;">
+        <td>{seq}</td>
+        <td>{option.label}</td>
+        <td class="text-end">{option.unitPrice}</td>
+        <td class="text-end">{option.quantity}</td>
+        <td class="text-end">{option.total}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <div id="items-container">
+
+    <div class="payment-section">
+      <div class="payment-method">
+        <strong>결제 상태</strong><br>
+        {paymentStatus(PAID, UNPAID, PARTIAL)}
+      </div>
+      <div class="in-words">
+        <strong>메모</strong><br>
+        {notes}
+      </div>
+      <table class="summary">
+        <tbody>
+          <tr>
+            <td>원가</td>
+            <td class="text-end" data-unit="원">{subtotal}</td>
+          </tr>
+          <tr>
+            <td>부가세</td>
+            <td class="text-end" data-unit="원">{vat}</td>
+          </tr>
+          <tr>
+            <td><strong>총액</strong></td>
+            <td class="text-end" data-unit="원"><strong>{total}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <div><strong>견적 신청자</strong><br>{client.requester}</div>
+      <div class="signature"><strong>거래 책임자</strong><br>{payment.contact}</div>
+    </div>
+
+    <div class="bottom-line"></div>
+    <div class="payment-info">
+      <div class="payment-details">
+        <strong>결제 정보</strong><br>
+        거래 은행 : {payment.bank}<br>
+        본사 계좌번호 : {payment.accountNo}<br>
+        본사 계좌명 : {payment.accountName}<br>
+        결제 담당자 : {payment.contact}<br>
+      </div>
+      <div class="qr-section">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={qrPayload}" alt="QR Code"><br>
+        <div class="qr-text">
+          견적 검증번호: {verificationNo}<br>
+          고객센터: {issuer.supportEmail}<br>
+          {issuer.name} 전산팀 (SUN)
+        </div>
+      </div>
+    </div>
+  </div>

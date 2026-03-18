@@ -1,0 +1,136 @@
+/* ===== Page Tokens ===== */
+    :root{
+      --page-w: 210mm;
+      --page-h: 297mm;
+      --page-margin: 10mm;        /* A4 기본 여백 */
+      --inner-h: calc(var(--page-h) - (2 * var(--page-margin)));
+      --fs-base: 11pt;            /* 본문 인쇄 최적 크기 */
+      --lh-base: 1.35;
+      --fs-title: 13pt;           /* 상단 타이틀(간소) */
+      --gap-y: 5mm;               /* 섹션 간격 (축소) */
+      --bdc: #222;                /* 테두리 색 */
+      --bdw: .6pt;                /* 테두리 두께 */
+      --thead-bg: #f4f4f4;        /* thead 배경(연함) */
+      --footer-h: 14mm;           /* 풋터 높이 최소화 */
+    }
+
+    /* ===== Print Page Setup ===== */
+    @page{ size: A4 portrait; margin: var(--page-margin); }
+    html,body{ background:#fff; }
+    body{
+      font-family: Pretendard, "Noto Sans KR", AppleSDGothicNeo, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-size: var(--fs-base);
+      line-height: var(--lh-base);
+      color:#111;
+    }
+
+    .a4-wrap{
+      width: var(--page-w);
+      margin: 0 auto;
+    }
+
+    /* 화면 미리보기일 때만 여백 시뮬레이션 */
+    @media screen {
+      body{ background:#f6f7f9 !important; }
+      .a4-wrap{ background:#fff; box-shadow: 0 0 .8mm rgba(0,0,0,.08); padding: var(--page-margin); }
+    }
+    @media print { .a4-wrap{ padding: 10mm; } }
+
+    /* 단일 페이지 컨테이너(내부 높이 고정) */
+    .page{
+      position: relative;
+      overflow: hidden;           /* 스케일 실패 시 넘침 차단 */
+    }
+
+    /* 상단 타이틀(간소) */
+    .top-title{
+      margin: 0 0 3mm 0;
+      font-size: var(--fs-title);
+      font-weight: 800;
+      letter-spacing: .2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .section{ margin-top: var(--gap-y); }
+    .no-break{ break-inside: avoid; page-break-inside: avoid; }
+
+    /* ===== Tables ===== */
+    .table{
+      --bs-border-color: var(--bdc);
+      --bs-border-width: var(--bdw);
+    }
+    .table>:not(caption)>*>*{
+      padding:.28rem .46rem;      /* 더 콤팩트 */
+      border-width: var(--bdw);
+      vertical-align: middle;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .table th{ font-weight:700; }
+    .table thead th{
+      background: var(--thead-bg);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .table-fixed{ table-layout: fixed; width:100%; }
+
+    .kv .k{ color:#555; font-weight:600; margin-right:.35rem; }
+    .kv .v{ font-weight:700; }
+
+    /* 프레임타입 이미지 셀(작게) */
+    td.td-fitimg{ position:relative; padding:0; height: 10mm; }
+    td.td-fitimg img{ position:absolute; inset:0; width:100%; object-fit:contain; display:block; }
+
+    /* 도면 박스 (얇게) */
+    .drawing.wrap{
+      border: var(--bdw) solid var(--bdc);
+      padding: 3mm;
+      border-radius: 2px;
+      background: #fff;
+    }
+    .drawing svg{ width:100%; height:auto; display:block; }
+
+    /* 품목표: 6열(자재명/절단/수량 × 2) */
+    .items col.name { width:32%; }
+    .items col.len  { width:13%; }
+    .items col.qty  { width:5%;  }
+    .text-num{ text-align:right; tab-size:2; }
+
+    /* ===== Footer (로고/회사/요약 : 하단, 최소화) ===== */
+    .print-footer{
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: var(--footer-h);
+      border-top: var(--bdw) solid var(--bdc);
+      display: flex; align-items: center; gap: 8mm;
+      padding: 2mm 0 0 0;
+      background: #fff;
+    }
+    .footer-inner{ display:flex; align-items:center; gap:8mm; padding-right: 2mm; padding-left: 0; width:100%; }
+    .logo-box{
+      width: 36mm; height: 12mm;          /* 더 작게 */
+      border: var(--bdw) solid #bbb;       /* 로고 없을 때 가이드 */
+      display:flex; align-items:center; justify-content:center;
+      background:#fff; flex: 0 0 auto;
+    }
+    .logo-box img{ max-width:100%; max-height:100%; object-fit:contain; display:block; }
+
+    .footer-meta{
+      display:flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .8rem;
+      font-size: 9.5pt; color:#444; min-width: 0;
+    }
+    .footer-meta .doc{ font-weight: 800; color:#111; margin-right: .3rem; }
+    .footer-meta .item{ white-space: nowrap; }
+    .footer-meta .k{ color:#555; font-weight:600; margin-right:.25rem; }
+    .footer-meta .v{ font-weight:700; }
+
+    /* ===== 스케일-투-핏 대상 ===== */
+    .content-fit{
+      transform-origin: top left;
+      /* JS가 scale과 width를 주입함 */
+    }
+
+    /* Print fine-tuning */
+    @media print{
+      a[href]::after{ content: ""; }
+      .table .bg-body-secondary{ background:#fff !important; }
+    }

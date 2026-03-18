@@ -1,0 +1,17 @@
+body {
+  font-family: Consolas, "맑은 고딕";
+  font-size: 13px;
+}
+
+.tabulator-cell {
+  padding: 4px;
+}
+
+.tabulator-cell.tabulator-editing {
+  background: #fff7cc;
+  border: 1px solid #f4b400;
+}
+
+.tabulator-row.tabulator-selected {
+  background: #e3f2fd;
+}

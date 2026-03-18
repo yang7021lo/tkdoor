@@ -1,0 +1,25 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# IDE
+.vscode/
+*.swp
+*.swo
+
+# FTP
+ftp-simple-temp.json
+.ftp-simple/
+
+# Images (6.5GB - FTP 서버에만 보관)
+www/img/
+
+# Large binaries (100MB+)
+*.exe
+*.pkg
+
+# Temp
+*.tmp
+*.bak
+*.log

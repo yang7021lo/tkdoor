@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TNG1 수주/견적 시스템 아키텍처 맵</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Malgun Gothic', 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
+
+#toolbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: #161b22; border-bottom: 1px solid #30363d;
+  padding: 8px 16px; display: flex; align-items: center; gap: 12px;
+}
+#toolbar h1 { font-size: 15px; color: #58a6ff; white-space: nowrap; }
+#toolbar .sep { width: 1px; height: 24px; background: #30363d; }
+#toolbar button {
+  background: #21262d; color: #c9d1d9; border: 1px solid #30363d;
+  padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;
+}
+#toolbar button:hover { background: #30363d; }
+#toolbar button.active { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+.legend { display: flex; gap: 12px; margin-left: auto; font-size: 11px; }
+.legend-item { display: flex; align-items: center; gap: 4px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+#canvas { position: absolute; top: 45px; left: 0; right: 0; bottom: 0; }
+svg { width: 100%; height: 100%; }
+
+#detail-panel {
+  position: fixed; right: -400px; top: 45px; bottom: 0; width: 400px;
+  background: #161b22; border-left: 1px solid #30363d;
+  transition: right 0.3s; z-index: 50; overflow-y: auto; padding: 16px;
+}
+#detail-panel.open { right: 0; }
+#detail-panel h2 { color: #58a6ff; font-size: 16px; margin-bottom: 12px; }
+#detail-panel .close-btn {
+  position: absolute; top: 8px; right: 12px; background: none;
+  border: none; color: #8b949e; font-size: 20px; cursor: pointer;
+}
+#detail-panel h3 { color: #f0883e; font-size: 13px; margin: 12px 0 4px; }
+#detail-panel ul { padding-left: 16px; font-size: 12px; line-height: 1.8; }
+#detail-panel li { color: #8b949e; }
+#detail-panel .tag {
+  display: inline-block; background: #1f6feb22; color: #58a6ff;
+  padding: 1px 6px; border-radius: 3px; font-size: 11px; margin: 1px;
+}
+#detail-panel .tag-db {
+  background: #f0883e22; color: #f0883e;
+}
+
+#minimap {
+  position: fixed; bottom: 12px; left: 12px; width: 200px; height: 140px;
+  background: #161b22; border: 1px solid #30363d; border-radius: 6px;
+  z-index: 50; overflow: hidden;
+}
+#minimap svg { width: 100%; height: 100%; }
+#minimap .viewport { fill: #58a6ff; opacity: 0.15; stroke: #58a6ff; stroke-width: 1; }
+
+.node-group { cursor: pointer; }
+.node-group:hover .node-rect { filter: brightness(1.3); }
+.node-rect { rx: 8; ry: 8; stroke-width: 1.5; }
+.node-label { font-size: 11px; fill: #fff; text-anchor: middle; pointer-events: none; font-weight: 600; }
+.node-sublabel { font-size: 9px; fill: #8b949e; text-anchor: middle; pointer-events: none; }
+.edge { fill: none; stroke-width: 1.2; opacity: 0.5; }
+.edge:hover { opacity: 1; stroke-width: 2.5; }
+.edge-label { font-size: 8px; fill: #484f58; }
+marker path { stroke: none; }
+
+.tooltip {
+  position: fixed; background: #1c2128; border: 1px solid #30363d;
+  padding: 6px 10px; border-radius: 6px; font-size: 11px;
+  pointer-events: none; z-index: 200; display: none; max-width: 280px;
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <h1>TNG1 수주/견적 시스템 아키텍처</h1>
+  <div class="sep"></div>
+  <button class="active" onclick="setFilter('all')">전체</button>
+  <button onclick="setFilter('core')">핵심 흐름</button>
+  <button onclick="setFilter('greem')">도면/프레임</button>
+  <button onclick="setFilter('julgok')">절곡</button>
+  <button onclick="setFilter('price')">단가</button>
+  <button onclick="setFilter('print')">출력/발주</button>
+  <button onclick="setFilter('data')">첨부/문서</button>
+  <div class="sep"></div>
+  <button onclick="resetView()">리셋</button>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div>메인 페이지</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div>DB 처리</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f0883e"></div>팝업/서브</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#bc8cff"></div>외부 모듈</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f85149"></div>출력/인쇄</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e3b341"></div>AJAX</div>
+  </div>
+</div>
+
+<div id="canvas"></div>
+<div id="detail-panel"><button class="close-btn" onclick="closePanel()">&times;</button><div id="detail-content"></div></div>
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ===== DATA =====
+const nodes = [
+  // === 핵심 (core) ===
+  { id: 'TNG1_B', label: 'TNG1_B.asp', sub: '수주/견적 메인', type: 'main', group: 'core',
+    x: 500, y: 300,
+    detail: {
+      desc: '수주/견적 정보의 중심 페이지. 고객정보, 품목, 가격, 용차, 대신 등 모든 정보 통합 관리',
+      params: ['sjidx(수주idx)', 'sjcidx(발주처idx)', 'sjmidx(담당자idx)', 'sjsidx(품목idx)', 'suju_kyun_status(0:수주/1:견적)', 'gubun(동작구분)', 'money_reset'],
+      tables: ['tng_sja', 'tng_sjaSub', 'tk_frameK', 'tk_framekSub', 'tk_etc', 'tk_wms_detail', 'tk_wms_djnum', 'tk_wms_meta', 'tk_customer', 'tk_daesin'],
+      forms: ['frmMain→TNG1_B_db.asp', 'etc_input→self', 'supriceinput→self', 'fyong→TNG1_B_dbyong.asp', 'fdaesin→TNG1_B_dbDaesin.asp']
+    }
+  },
+  { id: 'TNG1_B_db', label: 'TNG1_B_db.asp', sub: 'DB처리(수주저장)', type: 'db', group: 'core',
+    x: 260, y: 180,
+    detail: { desc: '수주/견적 메인 폼 데이터 INSERT/UPDATE/DELETE 처리', tables: ['tng_sja', 'tng_sjaSub', 'tk_frameK', 'tk_framekSub'] }
+  },
+  { id: 'TNG1_B_dbyong', label: 'TNG1_B_dbyong.asp', sub: 'DB처리(용차)', type: 'db', group: 'core',
+    x: 260, y: 420,
+    detail: { desc: '용차(배송차량) 정보 저장/삭제', tables: ['tk_yongcha'] }
+  },
+  { id: 'TNG1_B_dbDaesin', label: 'TNG1_B_dbDaesin.asp', sub: 'DB처리(대신)', type: 'db', group: 'core',
+    x: 260, y: 540,
+    detail: { desc: '대신(배송대행) 정보 저장/삭제', tables: ['tk_daesin'] }
+  },
+  { id: 'choicecorp', label: 'choicecorp.asp', sub: '거래처 선택 팝업', type: 'popup', group: 'core',
+    x: 200, y: 300,
+    detail: { desc: '거래처(고객사) 검색/선택 팝업. opener로 메인페이지에 값 전달', tables: ['tk_customer'] }
+  },
+
+  // === 수주 품목 입력 (core) ===
+  { id: 'TNG1_B_suju_quick', label: 'TNG1_B_suju_quick.asp', sub: '빠른 수주 입력', type: 'popup', group: 'core',
+    x: 760, y: 160,
+    detail: { desc: '품목별 빠른 수주 입력 팝업', params: ['cidx', 'sjidx', 'sjsidx', 'fkidx', 'sjb_idx'] }
+  },
+  { id: 'SJB_TYPE_INSERT', label: 'TNG1_SJB_TYPE_INSERT.asp', sub: '상품타입 관리', type: 'popup', group: 'core',
+    x: 760, y: 280,
+    detail: { desc: '상품타입(제품분류) CRUD 관리 UI', tables: ['tng_sjbtype'] }
+  },
+  { id: 'SJB_TYPE_INSERTdb', label: 'TNG1_SJB_TYPE_INSERTdb.asp', sub: 'DB처리(상품타입)', type: 'db', group: 'core',
+    x: 940, y: 280,
+    detail: { desc: '상품타입 INSERT/UPDATE/DELETE', tables: ['tng_sjbtype'] }
+  },
+  { id: 'SJB_TYPE_INSERT_open', label: 'SJB_TYPE_INSERT_open.asp', sub: '상품타입(팝업)', type: 'popup', group: 'core',
+    x: 940, y: 200,
+    detail: { desc: '상품타입 관리 팝업 버전', tables: ['tng_sjbtype'] }
+  },
+  { id: 'TNG1_Tdb', label: 'TNG1_Tdb.asp', sub: 'DB처리(프레임타입)', type: 'db', group: 'core',
+    x: 760, y: 380,
+    detail: { desc: '프레임타입 INSERT/UPDATE/DELETE 처리', tables: ['tk_frame', 'tk_frameK', 'tk_framekSub', 'tng_sja'] }
+  },
+
+  // === 도면/프레임 (greem) ===
+  { id: 'GREEMLIST', label: 'TNG1_GREEMLIST.asp', sub: '프레임 도면 목록', type: 'popup', group: 'greem',
+    x: 500, y: 560,
+    detail: { desc: '프레임 도면 목록 뷰어 (드롭다운 필터)', tables: ['tk_frame', 'tk_frameK', 'tk_framekSub', 'tng_sjb', 'tk_qty'] }
+  },
+  { id: 'GREEMLIST3', label: 'TNG1_GREEMLIST3.asp', sub: '확장 도면 목록', type: 'popup', group: 'greem',
+    x: 680, y: 560,
+    detail: { desc: '확장 프레임 도면 목록 (중첩 그리드)', tables: ['tk_frame', 'tk_frameK', 'tk_framekSub', 'tng_sjb', 'tk_qty'] }
+  },
+  { id: 'greemlist3_frame', label: 'greemlist3_frame.asp', sub: '프레임 상세(iframe)', type: 'popup', group: 'greem',
+    x: 820, y: 620,
+    detail: { desc: 'GREEMLIST3 내부 iframe으로 프레임 상세 표시' }
+  },
+  { id: 'FRAME_A_BAJU', label: 'TNG1_FRAME_A_BAJU.asp', sub: 'SVG 프레임 조립도', type: 'popup', group: 'greem',
+    x: 340, y: 620,
+    detail: { desc: 'SVG 캔버스 기반 프레임 조립도 그리기/편집', tables: ['tng_sja', 'tng_sjb', 'tk_frame', 'tk_frameK'] }
+  },
+  { id: 'FRAME_A_BAJUdb', label: 'FRAME_A_BAJUdb.asp', sub: 'DB처리(조립도)', type: 'db', group: 'greem',
+    x: 180, y: 620,
+    detail: { desc: '프레임 조립도 데이터 저장', tables: ['tk_frameK'] }
+  },
+
+  // === 절곡 (julgok) ===
+  { id: 'JULGOK_IN', label: 'TNG1_JULGOK_IN.asp', sub: '절곡 자재 입력', type: 'popup', group: 'julgok',
+    x: 120, y: 80,
+    detail: { desc: '절곡 자재 선택/입력 인터페이스 (좌측패널+iframe)', tables: ['tk_barasi', 'tk_barasisub', 'tng_sja', 'tk_barasi_type'] }
+  },
+  { id: 'JULGOK_BALJU', label: 'TNG1_JULGOK_BALJU.asp', sub: '절곡 설정/시각화', type: 'popup', group: 'julgok',
+    x: 120, y: 180,
+    detail: { desc: '절곡 구성 설정 + SVG 시각화 + 벤드값 계산', tables: ['tk_barasi', 'tng_sja', 'tng_sjb'] }
+  },
+  { id: 'JULGOK_PUMMOK', label: 'TNG1_JULGOK_PUMMOK.asp', sub: '절곡 품목 관리', type: 'popup', group: 'julgok',
+    x: 120, y: 0,
+    detail: { desc: '절곡 자재 품목 등록/관리', tables: ['tk_qty', 'tk_barasi'] }
+  },
+
+  // === 단가 (price) ===
+  { id: 'unitprice_t', label: 'unitprice_t.asp', sub: '단가 관리(수동/자동)', type: 'popup', group: 'price',
+    x: 880, y: 440,
+    detail: { desc: '수동/자동 단가 테이블 관리', tables: ['tng_unitprice_t'] }
+  },
+  { id: 'unittype_p', label: 'unittype_p.asp', sub: '단가 타입 관리', type: 'popup', group: 'price',
+    x: 1020, y: 440,
+    detail: { desc: '단가 타입(종류) 관리 UI', tables: ['tng_unitprice_t'] }
+  },
+  { id: 'unittype_al', label: 'unittype_al.asp', sub: '알루미늄 단가', type: 'popup', group: 'price',
+    x: 1020, y: 520,
+    detail: { desc: '알루미늄 자재 단가 관리', tables: ['tng_unitprice_al'] }
+  },
+  { id: 'stain_Item', label: 'TNG1_stain_Item.asp', sub: '품목 아이템 목록', type: 'popup', group: 'price',
+    x: 880, y: 520,
+    detail: { desc: '상품타입별 품목 아이템 CRUD', tables: ['tng_sjbtype', 'tk_qty'] }
+  },
+
+  // === 출력/발주 (print) ===
+  { id: 'simpleOrder', label: '/documents/simpleOrder', sub: '간편 주문서', type: 'external', group: 'print',
+    x: 500, y: 80,
+    detail: { desc: '간편 주문서 PDF 생성 (외부 문서 모듈)', params: ['sjidx'] }
+  },
+  { id: 'outsideOrder', label: '/documents/outsideOrder', sub: '외부 발주서', type: 'external', group: 'print',
+    x: 620, y: 80,
+    detail: { desc: '외부 발주서 미리보기 (외부 문서 모듈)', params: ['sjidx'] }
+  },
+  { id: 'baljuST', label: 'TNG1_B_baljuST.asp', sub: '발주서(철재)', type: 'print', group: 'print',
+    x: 340, y: 80,
+    detail: { desc: '철재 발주서 PDF/인쇄 생성 + SVG 도면', tables: ['tk_balju_st', 'tng_sja', 'tng_sjb', 'tk_qty', 'tng_sjbtype'] }
+  },
+  { id: 'baljuST1', label: 'TNG1_B_baljuST1.asp', sub: '발주서(철재2)', type: 'print', group: 'print',
+    x: 340, y: 0,
+    detail: { desc: '철재 발주서 두 번째 양식' }
+  },
+  { id: 'baljuAL', label: 'TNG1_B_baljuAL.asp', sub: '발주서(알루미늄)', type: 'print', group: 'print',
+    x: 460, y: 0,
+    detail: { desc: '알루미늄 발주서 PDF/인쇄' }
+  },
+
+  // === 첨부/문서/데이터 (data) ===
+  { id: 'B_data', label: 'TNG1_B_data.asp', sub: '첨부파일 관리', type: 'popup', group: 'data',
+    x: 700, y: 460,
+    detail: { desc: '파일 업로드, 메모, 클립보드 이미지 붙여넣기 지원', tables: ['tk_picupload', 'tk_picfiles', 'tk_picmemo'] }
+  },
+  { id: 'B_datalist', label: 'TNG1_B_datalist.asp', sub: '첨부파일 목록', type: 'popup', group: 'data',
+    x: 700, y: 540,
+    detail: { desc: '첨부파일 목록 조회/미리보기/삭제', tables: ['tk_picupload', 'tk_picfiles'] }
+  },
+  { id: 'door_glass_pop', label: 'TNG1_B_door_glass_pop.asp', sub: '유리 정보 보기', type: 'popup', group: 'data',
+    x: 560, y: 460,
+    detail: { desc: '도어 유리 사양 조회 팝업' }
+  },
+  { id: 'installManual', label: '/documents/installationManual', sub: '도면보기', type: 'external', group: 'data',
+    x: 560, y: 540,
+    detail: { desc: '시공 도면 뷰어 (외부 문서 모듈)', params: ['cidx', 'sjidx'] }
+  },
+  { id: 'meno_pop', label: 'tng1_b_meno_pop.asp', sub: '메모 팝업', type: 'popup', group: 'data',
+    x: 820, y: 460,
+    detail: { desc: '수주별 메모 팝업' }
+  },
+
+  // === 외부 모듈 (external) ===
+  { id: 'WMS_Create', label: 'TNG_WMS_Create.asp', sub: 'WMS 생성', type: 'external', group: 'core',
+    x: 80, y: 360,
+    detail: { desc: 'WMS(창고관리) 데이터 생성', params: ['sjidx'] }
+  },
+  { id: 'WMS_DASHBOARD', label: 'TNG_WMS_DASHBOARD.asp', sub: 'WMS 대시보드', type: 'external', group: 'core',
+    x: 80, y: 440,
+    detail: { desc: 'WMS 대시보드 (배송/재고 현황)', params: ['sjidx', 'sjcidx', 'sjmidx'] }
+  },
+  { id: 'nesting_v3', label: 'nesting_v3/nesting_main.asp', sub: '판풀이(네스팅)', type: 'external', group: 'core',
+    x: 80, y: 240,
+    detail: { desc: '판재 네스팅(판풀이) 계산 모듈', params: ['sjidx', 'cidx', 'sjmidx'] }
+  },
+  { id: 'baljulist', label: 'baljulist.asp', sub: '수주 목록', type: 'popup', group: 'core',
+    x: 380, y: 200,
+    detail: { desc: '수주/견적 목록 검색 + 상세 이동', tables: ['tng_sja', 'tk_customer'] }
+  },
+
+  // === AJAX 대상 (core) ===
+  { id: 'B_table', label: 'TNG1_B_table.asp', sub: '품목테이블(AJAX)', type: 'db', group: 'core',
+    x: 620, y: 200,
+    detail: { desc: 'AJAX GET으로 품목 테이블 HTML 동적 로드', params: ['sjcidx', 'sjmidx', 'sjidx', 'sjsidx'] }
+  },
+  { id: 'print_modal', label: 'modal/print/index.asp', sub: '인쇄모달(AJAX)', type: 'print', group: 'print',
+    x: 620, y: 0,
+    detail: { desc: 'AJAX GET으로 인쇄 목록 모달 동적 로드', params: ['sjidx'] }
+  },
+  { id: 'quotation', label: 'quotation/index.asp', sub: '견적서 출력', type: 'print', group: 'print',
+    x: 220, y: 0,
+    detail: { desc: '견적서 카드형 문서 출력 (Bootstrap + CSS print)', tables: ['tng_sja', 'tng_sjaSub', 'tng_sjb', 'tng_sjbtype', 'tk_customer'] }
+  },
+  { id: 'ds3211', label: 'ds3211.co.kr', sub: '대신화물 조회(외부)', type: 'external', group: 'core',
+    x: 80, y: 520,
+    detail: { desc: '외부 사이트: 대신화물 대리점 검색' }
+  },
+];
+
+const edges = [
+  // 핵심 흐름
+  { from: 'TNG1_B', to: 'TNG1_B_db', label: 'form:frmMain', type: 'form', group: 'core' },
+  { from: 'TNG1_B_db', to: 'TNG1_B', label: 'redirect', type: 'redirect', group: 'core' },
+  { from: 'TNG1_B', to: 'TNG1_B_dbyong', label: 'form:fyong', type: 'form', group: 'core' },
+  { from: 'TNG1_B', to: 'TNG1_B_dbDaesin', label: 'form:fdaesin', type: 'form', group: 'core' },
+  { from: 'TNG1_B', to: 'choicecorp', label: 'popup:거래처선택', type: 'popup', group: 'core' },
+  { from: 'choicecorp', to: 'TNG1_B', label: 'opener.replace', type: 'redirect', group: 'core' },
+  { from: 'TNG1_B', to: 'TNG1_B_suju_quick', label: 'popup:빠른입력', type: 'popup', group: 'core' },
+  { from: 'TNG1_B', to: 'SJB_TYPE_INSERT', label: 'link', type: 'link', group: 'core' },
+  { from: 'SJB_TYPE_INSERT', to: 'SJB_TYPE_INSERTdb', label: 'form', type: 'form', group: 'core' },
+  { from: 'SJB_TYPE_INSERTdb', to: 'SJB_TYPE_INSERT', label: 'redirect', type: 'redirect', group: 'core' },
+  { from: 'SJB_TYPE_INSERT_open', to: 'SJB_TYPE_INSERTdb', label: 'form', type: 'form', group: 'core' },
+  { from: 'TNG1_B', to: 'TNG1_Tdb', label: 'link', type: 'link', group: 'core' },
+  { from: 'baljulist', to: 'TNG1_B', label: 'link:상세이동', type: 'link', group: 'core' },
+
+  // WMS/외부
+  { from: 'TNG1_B', to: 'WMS_Create', label: 'link:WMS생성', type: 'link', group: 'core' },
+  { from: 'TNG1_B', to: 'WMS_DASHBOARD', label: 'link:대시보드', type: 'link', group: 'core' },
+  { from: 'TNG1_B', to: 'nesting_v3', label: 'popup:판풀이', type: 'popup', group: 'core' },
+
+  // 도면/프레임
+  { from: 'TNG1_B', to: 'GREEMLIST', label: 'link:도면목록', type: 'link', group: 'greem' },
+  { from: 'TNG1_B', to: 'GREEMLIST3', label: 'link:확장도면', type: 'link', group: 'greem' },
+  { from: 'GREEMLIST3', to: 'greemlist3_frame', label: 'iframe', type: 'iframe', group: 'greem' },
+  { from: 'TNG1_B', to: 'FRAME_A_BAJU', label: 'link:조립도', type: 'link', group: 'greem' },
+  { from: 'FRAME_A_BAJU', to: 'FRAME_A_BAJUdb', label: 'form', type: 'form', group: 'greem' },
+
+  // 절곡
+  { from: 'TNG1_B', to: 'JULGOK_IN', label: 'link:절곡입력', type: 'link', group: 'julgok' },
+  { from: 'JULGOK_IN', to: 'JULGOK_PUMMOK', label: 'link:품목', type: 'link', group: 'julgok' },
+  { from: 'TNG1_B', to: 'JULGOK_BALJU', label: 'link:절곡설정', type: 'link', group: 'julgok' },
+
+  // 출력/발주
+  { from: 'TNG1_B', to: 'simpleOrder', label: 'popup:주문서', type: 'popup', group: 'print' },
+  { from: 'TNG1_B', to: 'outsideOrder', label: 'popup:외부발주서', type: 'popup', group: 'print' },
+  { from: 'TNG1_B', to: 'baljuST', label: 'popup:발주서(철)', type: 'popup', group: 'print' },
+  { from: 'TNG1_B', to: 'baljuST1', label: 'popup:발주서(철2)', type: 'popup', group: 'print' },
+  { from: 'TNG1_B', to: 'baljuAL', label: 'popup:발주서(AL)', type: 'popup', group: 'print' },
+
+  // 첨부/문서
+  { from: 'TNG1_B', to: 'B_data', label: 'popup:첨부관리', type: 'popup', group: 'data' },
+  { from: 'TNG1_B', to: 'B_datalist', label: 'popup:첨부목록', type: 'popup', group: 'data' },
+  { from: 'TNG1_B', to: 'door_glass_pop', label: 'popup:유리보기', type: 'popup', group: 'data' },
+  { from: 'TNG1_B', to: 'installManual', label: 'popup:도면보기', type: 'popup', group: 'data' },
+  { from: 'TNG1_B', to: 'meno_pop', label: 'popup:메모', type: 'popup', group: 'data' },
+
+  // 단가
+  { from: 'TNG1_B', to: 'unitprice_t', label: 'link:단가관리', type: 'link', group: 'price' },
+  { from: 'TNG1_B', to: 'unittype_p', label: 'link:단가타입', type: 'link', group: 'price' },
+  { from: 'TNG1_B', to: 'unittype_al', label: 'link:AL단가', type: 'link', group: 'price' },
+  { from: 'TNG1_B', to: 'stain_Item', label: 'link:품목아이템', type: 'link', group: 'price' },
+
+  // AJAX 호출
+  { from: 'TNG1_B', to: 'TNG1_B_db', label: 'fetch:복사/삭제', type: 'form', group: 'core' },
+  { from: 'TNG1_B', to: 'B_table', label: 'fetch:품목로드', type: 'link', group: 'core' },
+  { from: 'TNG1_B', to: 'print_modal', label: 'fetch:인쇄모달', type: 'link', group: 'print' },
+  { from: 'TNG1_B', to: 'ds3211', label: 'popup:화물조회', type: 'popup', group: 'core' },
+];
+
+// ===== COLORS =====
+const typeColors = {
+  main: { fill: '#1f6feb', stroke: '#58a6ff' },
+  db: { fill: '#238636', stroke: '#3fb950' },
+  popup: { fill: '#9e6a03', stroke: '#f0883e' },
+  external: { fill: '#8957e5', stroke: '#bc8cff' },
+  print: { fill: '#da3633', stroke: '#f85149' },
+};
+
+const edgeColors = {
+  form: '#3fb950',
+  redirect: '#f0883e',
+  popup: '#bc8cff',
+  link: '#58a6ff',
+  iframe: '#f85149',
+  fetch: '#e3b341',
+};
+
+// ===== SVG SETUP =====
+let currentFilter = 'all';
+let transform = { x: 0, y: 0, k: 1 };
+let dragging = null;
+let dragOffset = { x: 0, y: 0 };
+let panning = false;
+let panStart = { x: 0, y: 0 };
+
+const canvas = document.getElementById('canvas');
+const NS = 'http://www.w3.org/2000/svg';
+
+function createSVG() {
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('id', 'main-svg');
+  const defs = document.createElementNS(NS, 'defs');
+
+  // Arrow markers
+  Object.entries(edgeColors).forEach(([type, color]) => {
+    const marker = document.createElementNS(NS, 'marker');
+    marker.setAttribute('id', `arrow-${type}`);
+    marker.setAttribute('viewBox', '0 0 10 6');
+    marker.setAttribute('refX', '10');
+    marker.setAttribute('refY', '3');
+    marker.setAttribute('markerWidth', '10');
+    marker.setAttribute('markerHeight', '6');
+    marker.setAttribute('orient', 'auto');
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', 'M0,0 L10,3 L0,6 Z');
+    path.setAttribute('fill', color);
+    marker.appendChild(path);
+    defs.appendChild(marker);
+  });
+
+  svg.appendChild(defs);
+
+  const g = document.createElementNS(NS, 'g');
+  g.setAttribute('id', 'main-group');
+  svg.appendChild(g);
+  canvas.appendChild(svg);
+
+  // Pan & Zoom
+  svg.addEventListener('mousedown', (e) => {
+    if (e.target === svg || e.target.closest('#main-group') && !e.target.closest('.node-group')) {
+      panning = true;
+      panStart = { x: e.clientX - transform.x, y: e.clientY - transform.y };
+    }
+  });
+  svg.addEventListener('mousemove', (e) => {
+    if (panning) {
+      transform.x = e.clientX - panStart.x;
+      transform.y = e.clientY - panStart.y;
+      applyTransform();
+    }
+    if (dragging) {
+      const node = nodes.find(n => n.id === dragging);
+      node.x = (e.clientX - transform.x - dragOffset.x) / transform.k;
+      node.y = (e.clientY - 45 - transform.y - dragOffset.y) / transform.k;
+      render();
+    }
+  });
+  svg.addEventListener('mouseup', () => { panning = false; dragging = null; });
+  svg.addEventListener('mouseleave', () => { panning = false; dragging = null; });
+  svg.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const rect = svg.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    const newK = Math.max(0.2, Math.min(3, transform.k * delta));
+    transform.x = mx - (mx - transform.x) * (newK / transform.k);
+    transform.y = my - (my - transform.y) * (newK / transform.k);
+    transform.k = newK;
+    applyTransform();
+  }, { passive: false });
+}
+
+function applyTransform() {
+  const g = document.getElementById('main-group');
+  g.setAttribute('transform', `translate(${transform.x},${transform.y}) scale(${transform.k})`);
+}
+
+function render() {
+  const g = document.getElementById('main-group');
+  g.innerHTML = '';
+
+  const visibleNodes = currentFilter === 'all' ? nodes : nodes.filter(n => n.group === currentFilter || n.id === 'TNG1_B');
+  const visibleIds = new Set(visibleNodes.map(n => n.id));
+  const visibleEdges = edges.filter(e => visibleIds.has(e.from) && visibleIds.has(e.to));
+
+  // Draw edges first
+  visibleEdges.forEach(e => {
+    const fromNode = nodes.find(n => n.id === e.from);
+    const toNode = nodes.find(n => n.id === e.to);
+    if (!fromNode || !toNode) return;
+
+    const nw = e.from === 'TNG1_B' ? 80 : 70;
+    const dx = toNode.x - fromNode.x;
+    const dy = toNode.y - fromNode.y;
+    const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+
+    const sx = fromNode.x + (dx/dist) * nw;
+    const sy = fromNode.y + (dy/dist) * 18;
+    const ex = toNode.x - (dx/dist) * 70;
+    const ey = toNode.y - (dy/dist) * 18;
+
+    const cx1 = sx + (ex - sx) * 0.3 + (sy - ey) * 0.15;
+    const cy1 = sy + (ey - sy) * 0.3 - (sx - ex) * 0.15;
+    const cx2 = sx + (ex - sx) * 0.7 + (sy - ey) * 0.15;
+    const cy2 = sy + (ey - sy) * 0.7 - (sx - ex) * 0.15;
+
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', `M${sx},${sy} C${cx1},${cy1} ${cx2},${cy2} ${ex},${ey}`);
+    path.setAttribute('class', 'edge');
+    path.setAttribute('stroke', edgeColors[e.type] || '#484f58');
+    path.setAttribute('marker-end', `url(#arrow-${e.type})`);
+
+    const title = document.createElementNS(NS, 'title');
+    title.textContent = `${e.from} → ${e.to}\n${e.label}`;
+    path.appendChild(title);
+    g.appendChild(path);
+
+    // Edge label
+    const midX = (sx + ex) / 2 + (sy - ey) * 0.08;
+    const midY = (sy + ey) / 2 - (sx - ex) * 0.08;
+    const text = document.createElementNS(NS, 'text');
+    text.setAttribute('x', midX);
+    text.setAttribute('y', midY);
+    text.setAttribute('class', 'edge-label');
+    text.textContent = e.label;
+    g.appendChild(text);
+  });
+
+  // Draw nodes
+  visibleNodes.forEach(n => {
+    const group = document.createElementNS(NS, 'g');
+    group.setAttribute('class', 'node-group');
+    group.setAttribute('transform', `translate(${n.x},${n.y})`);
+    group.setAttribute('data-id', n.id);
+
+    const isMain = n.id === 'TNG1_B';
+    const w = isMain ? 170 : 150;
+    const h = isMain ? 44 : 38;
+    const colors = typeColors[n.type] || typeColors.popup;
+
+    const rect = document.createElementNS(NS, 'rect');
+    rect.setAttribute('x', -w/2);
+    rect.setAttribute('y', -h/2);
+    rect.setAttribute('width', w);
+    rect.setAttribute('height', h);
+    rect.setAttribute('fill', colors.fill);
+    rect.setAttribute('stroke', colors.stroke);
+    rect.setAttribute('class', 'node-rect');
+    if (isMain) { rect.setAttribute('stroke-width', '3'); rect.setAttribute('filter', 'drop-shadow(0 0 8px rgba(88,166,255,0.5))'); }
+    group.appendChild(rect);
+
+    const label = document.createElementNS(NS, 'text');
+    label.setAttribute('y', -3);
+    label.setAttribute('class', 'node-label');
+    label.textContent = n.label;
+    group.appendChild(label);
+
+    const sub = document.createElementNS(NS, 'text');
+    sub.setAttribute('y', 12);
+    sub.setAttribute('class', 'node-sublabel');
+    sub.textContent = n.sub;
+    group.appendChild(sub);
+
+    // Events
+    group.addEventListener('mousedown', (e) => {
+      e.stopPropagation();
+      dragging = n.id;
+      dragOffset = {
+        x: e.clientX - transform.x - n.x * transform.k,
+        y: e.clientY - 45 - transform.y - n.y * transform.k
+      };
+    });
+    group.addEventListener('click', (e) => {
+      if (Math.abs(e.clientX - (transform.x + n.x * transform.k + dragOffset.x)) < 5) {
+        showDetail(n);
+      }
+    });
+    group.addEventListener('dblclick', () => showDetail(n));
+
+    g.appendChild(group);
+  });
+}
+
+// ===== DETAIL PANEL =====
+function showDetail(node) {
+  const panel = document.getElementById('detail-panel');
+  const content = document.getElementById('detail-content');
+  let html = `<h2>${node.label}</h2><p style="color:#8b949e;font-size:13px;margin-bottom:8px">${node.sub}</p>`;
+
+  if (node.detail) {
+    if (node.detail.desc) html += `<p style="font-size:12px;line-height:1.6;margin-bottom:8px">${node.detail.desc}</p>`;
+    if (node.detail.params) {
+      html += '<h3>파라미터</h3><div>';
+      node.detail.params.forEach(p => html += `<span class="tag">${p}</span> `);
+      html += '</div>';
+    }
+    if (node.detail.tables) {
+      html += '<h3>DB 테이블</h3><div>';
+      node.detail.tables.forEach(t => html += `<span class="tag tag-db">${t}</span> `);
+      html += '</div>';
+    }
+    if (node.detail.forms) {
+      html += '<h3>폼 전송</h3><ul>';
+      node.detail.forms.forEach(f => html += `<li>${f}</li>`);
+      html += '</ul>';
+    }
+  }
+
+  // Connected edges
+  const incoming = edges.filter(e => e.to === node.id);
+  const outgoing = edges.filter(e => e.from === node.id);
+  if (incoming.length) {
+    html += '<h3>들어오는 연결</h3><ul>';
+    incoming.forEach(e => html += `<li><span style="color:${edgeColors[e.type]}">${e.label}</span> ← ${e.from}</li>`);
+    html += '</ul>';
+  }
+  if (outgoing.length) {
+    html += '<h3>나가는 연결</h3><ul>';
+    outgoing.forEach(e => html += `<li><span style="color:${edgeColors[e.type]}">${e.label}</span> → ${e.to}</li>`);
+    html += '</ul>';
+  }
+
+  content.innerHTML = html;
+  panel.classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('detail-panel').classList.remove('open');
+}
+
+// ===== FILTER =====
+function setFilter(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('#toolbar button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  render();
+}
+
+function resetView() {
+  transform = { x: 200, y: 100, k: 1.1 };
+  applyTransform();
+}
+
+// ===== INIT =====
+createSVG();
+resetView();
+render();
+</script>
+</body>
+</html>

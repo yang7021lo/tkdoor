@@ -1,0 +1,22 @@
+<!-- iframe.html -->
+ 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 함수 실행을 위한 자바스크립트 파일 -->
+    <script>
+    // iframe.js
+    
+    function sendParent(element) {
+        parentElement = window.parent.document.getElementById("textField");
+        parentElement.textContent = element.textContent;
+    }
+    </script>
+</head>
+<body>
+    <button id="iframeContent" onclick="sendParent(this)">이 데이터를 부모 페이지의 요소로 전달해보자.</button>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>견적서</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0; padding: 0; background: #efefef; height: 100%;
+      font-family: "Noto Sans KR", sans-serif;
+    }
+    .a4-page {
+      width: 100vw;
+      aspect-ratio: 210 / 297;
+      background: #fff;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    header {
+      background: #005caf;
+      color: #fff;
+      padding: 1.5rem 2rem;
+    }
+    header .title {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    .company-info, .meta-info {
+      font-size: .9rem;
+    }
+    .meta-info span {
+      display: inline-block;
+      min-width: 8rem;
+      font-weight: 600;
+    }
+    .section {
+      padding: 1.5rem 2rem;
+    }
+    .section + .section {
+      border-top: 1px solid #e5e5e5;
+    }
+    .project-card {
+      flex: 0 0 60%;
+      max-width: 60%;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: .25rem;
+      padding: 1rem;
+    }
+    .project-card .item {
+      display: flex;
+      justify-content: space-between;
+      padding: .5rem 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .project-card .item:last-child { border-bottom: none; }
+    .project-card .label { font-weight: 600; color: #333; }
+    .project-card .value { color: #005caf; }
+
+    .total-card {
+      width: 200px;
+      background: #fff;
+      border: 2px solid #005caf;
+      border-radius: .25rem;
+      padding: 1rem;
+      margin-left: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .total-card .label { font-size: .9rem; color: #333; }
+    .total-card .amount {
+      font-size: 1.8rem; font-weight: 700; color: #005caf; margin-top: .5rem;
+    }
+
+    .table thead { background: #f8f9fa; }
+    .table-striped > tbody > tr:nth-of-type(odd) {
+      --bs-table-accent-bg: rgba(0, 92, 175, 0.03);
+    }
+    footer {
+      background: #f8f9fa;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: .8rem;
+      color: #666;
+    }
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+    @media print {
+  /* 전체 페이지 배경은 완전 흰색 */
+  body, .a4-page {
+    background: #fff !important;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* 헤더 */
+  header {
+    background: #fff !important;
+    color: #000 !important;
+    border-bottom: 1px solid #000 !important;
+  }
+
+  /* 프로젝트 카드 & total 카드 배경 희미하게 */
+  .project-card,
+  .total-card {
+    background: rgba(0,0,0,0.03) !important;
+    border-color: #000 !important;
+  }
+  .project-card .value,
+  .project-card .label,
+  .total-card .label,
+  .total-card .amount {
+    color: #000 !important;
+  }
+
+  /* 카드 (항목 카드) */
+  .card {
+    background: rgba(0,0,0,0.03) !important;
+    border-color: #000 !important;
+  }
+  .card-header {
+    background: rgba(0,0,0,0.05) !important;
+    color: #000 !important;
+    border-bottom: 1px solid #000 !important;
+  }
+
+  /* 속성 칩(작은 카드) */
+  .card.border {
+    background: rgba(0,0,0,0.02) !important;
+    border-color: #000 !important;
+  }
+  .card.border .fw-semibold,
+  .card.border .card-body div {
+    color: #000 !important;
+  }
+
+  /* 테이블 */
+  table, th, td {
+    background: #fff !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+  }
+  thead th {
+    background: rgba(0,0,0,0.02) !important;
+  }
+  tbody tr:nth-of-type(odd) td {
+    background: rgba(0,0,0,0.01) !important;
+  }
+
+  /* 버튼 감추기 */
+  .print-btn {
+    display: none !important;
+  }
+}
+
+    
+
+
+
+    .print-btn {
+      position: fixed; bottom: 1rem; right: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="a4-page">
+    <!-- Print 버튼 -->
+    <button class="btn btn-dark no-print print-btn" onclick="window.print()">🖨️ 인쇄</button>
+
+    <!-- 헤더 -->
+    <header class="d-flex justify-content-between align-items-center">
+      <div class="company-info">
+        <h1 class="title mb-0">견적서</h1>
+      </div>
+      <div class="text-end meta-info">
+        <h2 class="mb-1">(주) 태광도어</h2>
+        <div>경기 안산시 단원구 번영2로 25</div>
+        <div>031-493-0516 | supports@tkdoor.kr</div>
+      </div>
+    </header>
+
+    <!-- 프로젝트 & 총액 -->
+    <div class="section d-flex justify-content-between align-items-start">
+      <div class="project-card">
+        <div class="item">
+          <div class="label">업체명</div>
+          <div class="value">(주) 태양세이프도어</div>
+        </div>
+        <div class="item">
+          <div class="label">프로젝트명</div>
+          <div class="value">강남 오피스 신축 공사</div>
+        </div>
+        <div class="item">
+          <div class="label">견적번호</div>
+          <div class="value">QT-20250625-002</div>
+        </div>
+        <div class="item">
+          <div class="label">견적일자</div>
+          <div class="value">2025년 06월 25일 (수)</div>
+        </div>
+      </div>
+      <div class="total-card">
+        <div class="label">총액</div>
+        <div class="amount">₩1,479,500</div>
+      </div>
+    </div>
+
+   <!-- 항목 테이블 -->
+<!-- 항목 테이블: 부모/자식 행 구조 -->
+<div class="section table-responsive">
+  <!-- 카드 하나가 parent + child 전체를 감싸는 구조 -->
+<div class="section">
+  <div class="card mb-4 shadow-sm">
+    <!-- 카드 헤더에 요약 정보 -->
+    <div class="card-header bg-primary text-white">
+      <div class="d-flex justify-content-between">
+        <div><strong>No. 1</strong> 신형단열자동 (65×90)</div>
+        <!-- 작은 속성 카드 블록 예시 -->
+<div class="d-flex flex-wrap gap-2">
+  <!-- 재질 카드 -->
+  <div class="card border" style="width:6rem; font-size:.75rem;">
+    <div class="card-body p-1 text-center">
+      <div class="fw-semibold">재질</div>
+      <div>알루미늄</div>
+    </div>
+  </div>
+  <!-- 도장 카드 -->
+  <div class="card border" style="width:6rem; font-size:.75rem;">
+    <div class="card-body p-1 text-center">
+      <div class="fw-semibold">도장</div>
+      <div>블랙</div>
+    </div>
+  </div>
+  <!-- 도어 포함 여부 카드 -->
+  <div class="card border" style="width:6rem; font-size:.75rem;">
+    <div class="card-body p-1 text-center">
+      <div class="fw-semibold">도어포함</div>
+      <div>예</div>
+    </div>
+  </div>
+  <!-- 기타 카드 -->
+  <div class="card border" style="width:6rem; font-size:.75rem;">
+    <div class="card-body p-1 text-center">
+      <div class="fw-semibold">기타</div>
+      <div>중간키</div>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </div>
+
+    <!-- 카드 바디에 자식(세부) 테이블 -->
+    <div class="card-body p-0">
+      <table class="table table-bordered table-sm mb-0 text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Sub No.</th>
+            <th>세부 품목</th>
+            <th>장소</th>
+            <th>규격 W</th>
+            <th>규격 H</th>
+            <th>수량</th>
+            <th>단가</th>
+            <th>금액</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>모터</td>
+            <td>현관</td>
+            <td>1225</td>
+            <td>2830</td>
+            <td>1</td>
+            <td>280,000원</td>
+            <td>308,000원</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>리모컨</td>
+            <td>사무실</td>
+            <td>100</td>
+            <td>50</td>
+            <td>2</td>
+            <td>20,000원</td>
+            <td>44,000원</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+  
+</div>
+
+
+    <!-- 합계 -->
+    <div class="section d-flex justify-content-end">
+      <table class="table table-borderless table-sm text-end w-auto">
+        <tr><th class="px-3">공급가 총액:</th><td class="px-3">₩1,345,000</td></tr>
+        <tr><th class="px-3">세액 (부가가치세):</th><td class="px-3">₩134,500</td></tr>
+        <tr><th class="px-3">합계금액:</th><td class="px-3 fw-bold">₩1,479,500</td></tr>
+      </table>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+      본 견적서는 전화 또는 이메일 확인 후 발주서 접수일에 최종 확정됩니다.
+    </footer>
+  </div>
+</body>
+</html>

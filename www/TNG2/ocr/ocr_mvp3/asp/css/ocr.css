@@ -1,0 +1,434 @@
+/* OCR 검측 입력 스타일 */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Malgun Gothic', sans-serif;
+    background: #1e1e1e;
+    color: #fff;
+    overflow: hidden;
+}
+
+#ocr-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 이미지 뷰어 */
+.ocr-viewer {
+    flex: 1;
+    overflow: auto;
+    background: #2d2d2d;
+    padding: 20px;
+    position: relative;
+    min-width: 200px;
+}
+
+.ocr-image-wrap {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    transform-origin: top left;
+}
+
+.ocr-image-wrap img {
+    display: block;
+    pointer-events: none;
+}
+
+/* OCR 토큰 */
+.ocr-token {
+    position: absolute;
+    z-index: 10;
+    border: 2px solid rgba(0, 255, 0, 0.5);
+    background: rgba(0, 255, 0, 0.1);
+    cursor: pointer;
+    font-size: 11px;
+    color: #0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.ocr-token:hover {
+    background: rgba(0, 255, 0, 0.3);
+    border-color: #0f0;
+}
+
+.ocr-token.selected {
+    border-color: #ff0;
+    background: rgba(255, 255, 0, 0.3);
+    color: #ff0;
+}
+
+.ocr-token.inactive {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* 현재 라인 하이라이트 */
+.line-highlight {
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    right: 0;
+    background: rgba(0, 191, 255, 0.1);
+    border-top: 2px dashed #00bfff;
+    border-bottom: 2px dashed #00bfff;
+    pointer-events: none;
+    display: none;
+}
+
+/* 줌 컨트롤 */
+.zoom-controls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(30, 30, 30, 0.95);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: fit-content;
+    border: 1px solid #444;
+}
+
+.zoom-label {
+    font-size: 13px;
+    color: #ccc;
+    min-width: 50px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.zoom-btn {
+    padding: 4px 10px;
+    background: #3c3c3c;
+    border: 1px solid #555;
+    color: #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.zoom-btn:hover {
+    background: #555;
+    color: #fff;
+}
+
+.zoom-hint {
+    font-size: 11px;
+    color: #666;
+    margin-left: 6px;
+}
+
+/* ==========================================
+   스플릿바 - 크고 눈에 잘 보이는 핸들
+   ========================================== */
+.split-bar {
+    width: 12px;
+    background: #2a2a2a;
+    cursor: col-resize;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+}
+
+/* 중앙 핸들 */
+.split-handle {
+    width: 8px;
+    height: 60px;
+    background: #555;
+    border-radius: 4px;
+    position: relative;
+}
+
+/* 핸들 안쪽 그립 라인들 */
+.split-handle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 40px;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        #999 0px,
+        #999 2px,
+        transparent 2px,
+        transparent 6px
+    );
+}
+
+.split-bar:hover {
+    background: #333;
+}
+
+.split-bar:hover .split-handle {
+    background: #007acc;
+}
+
+.split-bar:hover .split-handle::before {
+    background-image: repeating-linear-gradient(
+        to bottom,
+        #fff 0px,
+        #fff 2px,
+        transparent 2px,
+        transparent 6px
+    );
+}
+
+.split-bar.active {
+    background: #333;
+}
+
+.split-bar.active .split-handle {
+    background: #007acc;
+}
+
+.split-bar.active .split-handle::before {
+    background-image: repeating-linear-gradient(
+        to bottom,
+        #fff 0px,
+        #fff 2px,
+        transparent 2px,
+        transparent 6px
+    );
+}
+
+/* ==========================================
+   입력 패널
+   ========================================== */
+.ocr-panel {
+    width: 380px;
+    background: #252526;
+    display: flex;
+    flex-direction: column;
+    min-width: 280px;
+}
+
+.panel-header {
+    padding: 12px 20px;
+    background: #333;
+    border-bottom: 1px solid #3c3c3c;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* 입력 영역 (상단 고정) */
+.panel-input {
+    padding: 15px;
+    border-bottom: 1px solid #3c3c3c;
+}
+
+.current-line {
+    background: #333;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.current-line h3 {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    color: #888;
+}
+
+.field-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.field {
+    flex: 1;
+}
+
+.field label {
+    display: block;
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.field input {
+    width: 100%;
+    padding: 8px;
+    background: #1e1e1e;
+    border: 2px solid #3c3c3c;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.field input:focus {
+    outline: none;
+    border-color: #007acc;
+}
+
+.field input.active {
+    border-color: #ff0;
+    background: #2a2a00;
+}
+
+.field input.filled {
+    border-color: #4caf50;
+    background: #1e3d1e;
+}
+
+.field input::placeholder {
+    color: #555;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+/* 버튼 */
+.btn-row {
+    display: flex;
+    gap: 6px;
+}
+
+.btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.btn-success {
+    background: #4caf50;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: #66bb6a;
+}
+
+.btn-secondary {
+    background: #3c3c3c;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: #4c4c4c;
+}
+
+/* ==========================================
+   결과 영역 (하단, 스크롤)
+   ========================================== */
+.panel-results {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.result-header {
+    font-size: 13px;
+    color: #888;
+    padding: 10px 15px;
+    border-bottom: 1px solid #3c3c3c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.result-count {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.result-table-wrap {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.result-table thead {
+    position: sticky;
+    top: 0;
+    background: #333;
+    z-index: 1;
+}
+
+.result-table th {
+    padding: 8px 10px;
+    text-align: center;
+    color: #888;
+    font-size: 11px;
+    font-weight: normal;
+    border-bottom: 1px solid #3c3c3c;
+}
+
+.result-table td {
+    padding: 8px 10px;
+    text-align: center;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.result-table tbody tr:hover {
+    background: #333;
+}
+
+.result-table .col-no {
+    width: 35px;
+    color: #666;
+}
+
+.result-table .col-del {
+    width: 30px;
+}
+
+.result-table .delete-btn {
+    background: none;
+    border: none;
+    color: #f44336;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 4px;
+}
+
+.result-table .delete-btn:hover {
+    color: #ff6659;
+}
+
+/* 푸터 */
+.panel-footer {
+    padding: 8px 15px;
+    background: #007acc;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+/* 로딩 */
+.loading {
+    text-align: center;
+    padding: 50px;
+    color: #888;
+}
+
+/* 스플릿 드래그 중 선택 방지 */
+body.split-dragging {
+    user-select: none;
+    cursor: col-resize;
+}

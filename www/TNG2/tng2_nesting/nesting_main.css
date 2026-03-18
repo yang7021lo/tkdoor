@@ -1,0 +1,48 @@
+/* nesting_main.css */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Malgun Gothic',Arial,sans-serif;font-size:13px;background:#f0f2f5}
+
+.header-bar{
+  position:sticky;top:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 16px;background:#fff;
+  border-bottom:2px solid #1a73e8;
+  box-shadow:0 2px 4px rgba(0,0,0,0.1)
+}
+.header-left{display:flex;align-items:center;gap:16px}
+.header-left b{font-size:16px;color:#1a73e8}
+.header-info{color:#666;font-size:12px}
+.header-right{display:flex;gap:8px}
+
+.btn-primary{
+  padding:10px 24px;background:#1a73e8;color:#fff;
+  border:none;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer
+}
+.btn-primary:hover{background:#1557b0}
+
+.main-wrap{display:flex;height:calc(100vh - 54px);padding:12px;gap:8px}
+
+.panel{background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1);display:flex;flex-direction:column;overflow:hidden}
+.panel-left,.panel-right{flex:1}
+.panel-header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#f8f9fa;border-bottom:1px solid #e0e0e0}
+.panel-header h3{font-size:14px;font-weight:700;color:#333}
+.filter-input{padding:6px 10px;border:1px solid #ddd;border-radius:4px;font-size:12px;width:150px}
+.badge{background:#e8f0fe;padding:4px 10px;border-radius:12px;font-size:12px;color:#1a73e8}
+
+.panel-center{display:flex;flex-direction:column;justify-content:center;gap:8px;padding:0 8px}
+.btn-move{width:44px;height:36px;background:#fff;border:1px solid #ddd;border-radius:4px;cursor:pointer;font-weight:700;font-size:14px}
+.btn-move:hover{background:#1a73e8;color:#fff;border-color:#1a73e8}
+
+#tableLeft,#tableRight{flex:1;overflow:hidden}
+
+.tabulator{border:none;font-size:12px}
+.tabulator .tabulator-header{background:#f5f7fa;border-bottom:1px solid #e0e0e0}
+.tabulator .tabulator-row{border-bottom:1px solid #f0f0f0}
+.tabulator .tabulator-row:hover{background:#e8f0fe!important}
+.tabulator .tabulator-row.tabulator-selected{background:#d2e3fc!important}
+.tabulator .tabulator-cell{padding:6px;border-right:1px solid #f0f0f0}
+
+/* 수량 입력 */
+.tabulator .tabulator-cell input[type="number"]{
+  width:100%;padding:4px;border:1px solid #ddd;border-radius:3px;text-align:right;font-size:12px
+}

@@ -1,0 +1,356 @@
+/* ================================
+   네스팅 결과 페이지 CSS
+   /tng2/nesting/nesting_result.css
+================================ */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Malgun Gothic', Arial, sans-serif;
+  background: #f6f6f6;
+}
+
+/* 상단 바 */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-left b {
+  font-size: 16px;
+  color: #222;
+}
+
+.info-text {
+  color: #666;
+  font-size: 13px;
+}
+
+.topbar-center {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.material-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.mat-btn {
+  padding: 6px 14px;
+  border: 1px solid #bbb;
+  border-radius: 999px;
+  background: #f4f4f4;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mat-btn:hover {
+  background: #e0e0e0;
+}
+
+.mat-btn.active {
+  background: #222;
+  color: #fff;
+  border-color: #222;
+}
+
+/* 판재 칩 리스트 */
+.sheet-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sheet-chip {
+  display: inline-block;
+  padding: 5px 12px;
+  background: #e8f0fe;
+  color: #1a73e8;
+  border: 1px solid #c4d8f4;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* 네스팅 요약 바 */
+.nesting-summary {
+  padding: 0 12px;
+}
+
+.summary-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: #f0f7ff;
+  border: 1px solid #c4d8f4;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.summary-item {
+  padding: 4px 10px;
+  background: #1a73e8;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* 판재 그룹 헤더 */
+.sheet-group-header {
+  padding: 10px 14px;
+  background: #333;
+  color: #fff;
+  font-weight: 900;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  padding: 8px 16px;
+  background: #1a73e8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #1557b0;
+}
+
+.btn-secondary {
+  padding: 8px 16px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: #f5f5f5;
+}
+
+.stat-text {
+  margin-left: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* 메인 레이아웃 */
+.wrap {
+  display: flex;
+  height: calc(100vh - 52px);
+  padding: 6px;
+  gap: 0;
+}
+
+.panel-left {
+  width: 40%;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.panel-right {
+  width: 60%;
+  background: #fff;
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+/* Split.js Gutter */
+.gutter {
+  background: #000;
+}
+
+.gutter.gutter-horizontal {
+  width: 14px;
+  cursor: col-resize;
+  position: relative;
+}
+
+.gutter.gutter-horizontal::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 48px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
+}
+
+/* 아이템 리스트 */
+#itemList {
+  height: 100%;
+}
+
+/* 시트 리스트 */
+.sheet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 12px;
+}
+
+.sheet-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+}
+
+.sheet-head {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 900;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.sheet-head .sheet-no {
+  color: #1a73e8;
+}
+
+.sheet-head .sheet-spec {
+  color: #666;
+}
+
+.sheet-head .loss-rate {
+  color: #d60000;
+  font-size: 13px;
+}
+
+.canvas-wrap {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sheet-card canvas {
+  width: 100%;
+  display: block;
+}
+
+/* 시트 상세 정보 */
+.sheet-detail {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+  font-size: 12px;
+  color: #555;
+}
+
+.detail-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.detail-item {
+  background: #f5f5f5;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* Tabulator 그룹 헤더 */
+.tabulator-group .grp-count {
+  color: #d60000;
+  font-weight: 700;
+}
+
+/* 인쇄 스타일 */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  .topbar, .panel-left, .gutter {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  .wrap {
+    height: auto !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .panel-right {
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .sheet-list {
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .sheet-card {
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 0 6mm 0 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .sheet-card:nth-child(2n) {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .sheet-card:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .canvas-wrap {
+    border: none !important;
+    margin: 0 !important;
+  }
+
+  .sheet-card {
+    min-height: 130mm;
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "created_at": "2026-02-03T14:20:54.696622",
+    "tesseract_lang": "kor+eng",
+    "total_items": 1
+  },
+  "image": {
+    "filename": "test.jpg",
+    "filepath": "C:\\Users\\user\\Downloads\\test.jpg",
+    "width": 2180,
+    "height": 3008
+  },
+  "boxes": [
+    {
+      "id": 0,
+      "text": "EA",
+      "x": 1101,
+      "y": 1052,
+      "w": 49,
+      "h": 12,
+      "conf": 41,
+      "level": 5,
+      "block_num": 3,
+      "line_num": 2,
+      "word_num": 2
+    }
+  ]
+}

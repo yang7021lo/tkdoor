@@ -1,0 +1,100 @@
+        /* 상세페이지 전용(최소) */
+        .detail-wrap { width:100%; padding:20px; }
+        .detail-header {
+            background:#fff; border:1px solid #dee2e6; border-radius:8px;
+            padding:16px; margin-bottom:16px;
+        }
+        .detail-grid {
+            display:grid;
+            grid-template-columns: 180px 1fr 180px 1fr;
+            gap:10px 14px;
+            align-items:center;
+        }
+        .detail-label { color:#6c757d; font-weight:600; font-size:13px; }
+        .detail-value { color:#111; font-weight:600; font-size:14px; }
+        .detail-actions {
+            display:flex; gap:8px; justify-content:flex-end; margin-top:12px;
+        }
+
+        .sub-card {
+            background:#fff; border:1px solid #dee2e6; border-radius:8px;
+            padding:16px;
+        }
+        .sub-top {
+            display:flex; align-items:center; justify-content:space-between;
+            margin-bottom:12px;
+        }
+        .sub-title { font-size:16px; font-weight:700; margin:0; }
+        .btn-sm {
+            padding:6px 10px; font-size:13px; border-radius:6px;
+        }
+
+        .muted { color:#6c757d; font-weight:500; }
+        .right { text-align:right; }
+        .left { text-align:left; }
+        .badge-soft {
+            display:inline-block; padding:6px 10px; border-radius:999px;
+            font-size:12px; font-weight:700;
+            border:1px solid #dee2e6;
+            background:#f8f9fa; color:#333;
+        }
+        .badge-soft.success { background:#eaf7f0; border-color:#cfe9db; color:#1e7e34; }
+        .badge-soft.info    { background:#e7f1ff; border-color:#cfe0ff; color:#1b66d1; }
+        .badge-soft.gray    { background:#f3f4f6; border-color:#e5e7eb; color:#6b7280; }
+        .badge-soft.danger  { background:#fdecec; border-color:#f7cfcf; color:#c0392b; }
+
+        /* sub table */
+        .sub-table { width:100%; border-collapse:collapse; }
+        .sub-table th, .sub-table td {
+            border:1px solid #dee2e6; padding:10px 8px; font-size:13px; text-align:center;
+            white-space:nowrap;
+        }
+        .sub-table th { background:#f1f3f5; font-weight:700; }
+        .sub-table tbody tr:hover { background:#f8f9fa; }
+
+        /* 상단 버튼과 충돌 방지 */
+        .detail-actions .btn { display:inline-flex; align-items:center; justify-content:center; }
+        
+        /* =========================
+        공통 버튼 리셋
+        ========================= */
+        .sub-table button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: all .15s ease-in-out;
+            font-weight: 500;
+        }
+
+
+        /* =========================
+        수정 버튼
+        ========================= */
+        .btn-edit {
+            color: #2563eb;               /* blue-600 */
+            background: #eef2ff;          /* blue soft */
+            border: 1px solid #c7d2fe;
+        }
+
+        .btn-edit:hover {
+            background: #e0e7ff;
+            color: #1d4ed8;
+        }
+
+        /* =========================
+        삭제 버튼
+        ========================= */
+        .btn-delete {
+            color: #dc2626;               /* red-600 */
+            background: #fef2f2;          /* red soft */
+            border: 1px solid #fecaca;
+            margin-left: 6px;
+        }
+
+        .btn-delete:hover {
+            background: #fee2e2;
+            color: #b91c1c;
+        }

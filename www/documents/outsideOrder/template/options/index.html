@@ -1,0 +1,185 @@
+
+        <div class="header">
+            <div class="title">옵션</div>
+            <div class="logo">
+                <img src="/documents/outsideOrder/logo.svg" alt="태광도어 로고" style="height:40px;">
+            </div>
+        </div>
+        <table class="my-2 print-block">
+            <thead>
+                <tr>
+                    <th style="width:6%;">#</th>
+                    <th class="txt-left">제품명</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 1행: 번호(rowspan 유지) + 제품명 + (오른쪽 전체를 감싸는 셀 안에 '위치' 한 줄짜리 독립 테이블) -->
+                <tr>
+                    <td rowspan="11" style="width:6%;">{options.seq}</td>
+                    <td class="text-start">{options.name}</td>
+                </tr>
+
+                <!-- 2행: 헤더 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <thead>
+                                <tr>
+                                    <th style="width:12%;">재분 여부</th>
+                                    <th style="width:18%;">재분 단가</th>
+                                    <th style="width:10%;">재분 수량</th>
+                                    <th style="width:18%;">재분 총액</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- 3행: 데이터 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <tbody>
+                                <tr>
+                                    <td style="width:12%;">{options.redivision.enabled}</td>
+                                    <td style="width:18%;" class="text-end">{options.redivision.unitPrice}</td>
+                                    <td style="width:10%;" class="text-end">{options.redivision.quantity}</td>
+                                    <td style="width:18%;" class="text-end">{options.redivision.total}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+
+
+
+
+                <!-- 2행: 헤더 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <thead>
+                                <tr>
+                                    <th style="width:12%;">로비폰 여부</th>
+                                    <th style="width:18%;">로비폰 단가</th>
+                                    <th style="width:10%;">로비폰 수량</th>
+                                    <th style="width:18%;">로비폰 총액</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- 3행: 데이터 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <tbody>
+                                <tr>
+                                    <td style="width:12%;">{options.lobbyPhone.enabled}</td>
+                                    <td style="width:18%;">{options.lobbyPhone.unitPrice}</td>
+                                    <td style="width:10%;">{options.lobbyPhone.quantity}</td>
+                                    <td style="width:18%;">{options.lobbyPhone.total}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+
+                <!-- 2행: 헤더 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <thead>
+                                <tr>
+                                    <th style="width:12%;">보양재 여부</th>
+                                    <th style="width:18%;">보양재 단가</th>
+                                    <th style="width:10%;">보양재 수량</th>
+                                    <th style="width:18%;">보양재 총액</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- 3행: 데이터 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <tbody>
+                                <tr>
+                                    <td style="width:12%;">{options.protectiveMaterial.enabled}</td>
+                                    <td style="width:18%;">{options.protectiveMaterial.unitPrice}</td>
+                                    <td style="width:10%;">{options.protectiveMaterial.quantity}</td>
+                                    <td style="width:18%;">{options.protectiveMaterial.total}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+
+
+                <!-- 2행: 헤더 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <thead>
+                                <tr>
+                                    <th style="width:12%;">하부레일 여부</th>
+                                    <th style="width:18%;">하부레일 단가</th>
+                                    <th style="width:10%;">하부레일 수량</th>
+                                    <th style="width:18%;">하부레일 총액</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- 3행: 데이터 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <tbody>
+                                <tr>
+                                    <td style="width:12%;">{options.bottomRail.enabled}</td>
+                                    <td style="width:18%;">{options.bottomRail.unitPrice}</td>
+                                    <td style="width:10%;">{options.bottomRail.quantity}</td>
+                                    <td style="width:18%;">{options.bottomRail.total}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+
+
+                <!-- 2행: 헤더 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <thead>
+                                <tr>
+                                    <th>옵션 최종가</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- 3행: 데이터 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <tbody>
+                                <tr>
+                                    <td>{options.finalAmount}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>

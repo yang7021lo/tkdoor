@@ -1,0 +1,255 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container-fluid {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    height: 800px;           /* 🔹 고정 높이 설정 */
+  }
+  
+  /* ───── 1. 상단 영역 (고정 높이) ───── */
+  .first-row {
+    height: 50px;
+    flex-shrink: 0;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+  
+  .first-row .row {
+    width: 100%;
+    margin: 0;
+  }
+  
+  .first-row .input-group {
+    flex-wrap: nowrap;
+  }
+  
+  .first-row .form-control {
+    min-width: 100px;
+  }
+  
+  /* ───── 2. 본문 영역 (좌1, 좌2, 가운데, 우) ───── */
+  .second-row {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    min-height: 0;
+    height: 700px;           /* 🔹 고정 높이 설정 */
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* 왼쪽 첫 번째 영역 */
+  .second-left-1 {
+    width: 370px;
+    height: 700px;           /* 🔹 고정 높이 설정 */
+    flex-shrink: 0;
+    background-color: #fafafa;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;        /* 🔹 세로 스크롤 활성화 */
+    overflow-x: hidden;      /* 🔸 가로 스크롤은 숨김 (선택 사항) */
+    }
+  
+  /* 왼쪽 두 번째 영역 */
+  .second-left-2 {
+    width: 320px;
+    height: 700px;           /* 🔹 고정 높이 설정 */
+    flex-shrink: 0;
+    background-color: #fafafa;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;        /* 🔹 세로 스크롤 활성화 */
+    overflow-x: hidden;      /* 🔸 가로 스크롤은 숨김 (선택 사항) */
+    }
+  
+  /* 가운데 영역 */
+  .second-flex-grow {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    min-height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    background-color: #ffffff;
+  }
+  
+  /* 오른쪽 영역 */
+  .second-right {
+    width: 200px;
+    height: 700px;           /* 🔹 고정 높이 설정 */
+    flex-shrink: 0;
+    background-color: #fafafa;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;        /* 🔹 세로 스크롤 활성화 */
+    overflow-x: hidden;      /* 🔸 가로 스크롤은 숨김 (선택 사항) */
+    }
+  
+  /* ───── SVG 컨테이너 ───── */
+  .canvas-container {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .svg-container {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+  
+
+
+/* ───── 크롬 flexbox bug fix ───── */
+.third-row,
+.fixed-width,
+.flex-fill,
+.col-12 {
+  min-height: 0 !important;   /* ✅ 크롬 잘림 방지 */
+}
+
+/* 세 번째 줄 (전체 컨테이너) */
+.third-row {
+    display: flex;
+    align-items: flex-start;   /* ✅ stretch → flex-start */
+  }
+  
+  .third-inner {
+    flex: 1;                  /* 남은 공간 채움 */
+    display: flex;            /* 안쪽도 flex */
+    overflow: hidden;         /* 스크롤은 여기서 끔 */
+  }
+  
+
+/* 왼쪽 패널 */
+
+/* 왼쪽 고정 영역 */
+.fixed-width {
+    flex: 0 0 370px;            /* 폭 고정 */
+    max-width: 370px;
+    height: auto;               /* 자동 확장 */
+    overflow-y: auto;           /* ✅ 버튼이 많아도 스크롤로 표시 */
+    position: relative;
+    z-index: 2;                 /* 오른쪽 내용 위에 뜨도록 */
+  }
+
+/* 오른쪽 영역 */
+.flex-fill {
+    flex: 1;
+    min-height: 0 !important;   /* ✅ 크롬에서 자식 높이 잘림 방지 */
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .flex-grow {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-color: #ffffff;
+  }
+  
+  .scroll-container {
+    white-space: nowrap;
+  }
+  
+  .card-custom {
+    display: inline-block;
+    width: 200px;
+    margin-right: 10px;
+    vertical-align: top;
+  }
+  
+  /* ───── 라인 및 드롭다운 ───── */
+  .line {
+    height: 30px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    font-size: 14px;
+  }
+  
+  .line:last-child {
+    border-bottom: none;
+  }
+  
+  .line.menu-line {
+    padding: 0;
+    height: auto;
+  }
+  
+  .menu-container {
+    width: 100%;
+  }
+  
+  .dropdown-header {
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+  }
+  
+  .dropdown-content {
+    display: none;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-top: none;
+  }
+  
+  .dropdown-content .input-group {
+    margin-bottom: 10px;
+  }
+  
+  .dropdown-content label {
+    width: 80px;
+    margin-right: 10px;
+  }
+  
+  .dropdown-content input {
+    flex: 1;
+  }
+  
+/* 버튼 그리드 (왼쪽 패널에 딱 맞게 꽉 차도록 수정) */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 6px;
+    width: 100%;
+  }
+  
+  .button-grid .btn {
+    height: 50px;
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 3px;
+    margin: 0;
+    color: #333;
+    width: 100%;
+  }
+  
+  .button-grid .btn:hover {
+    background-color: #e4e4e4;
+  }
+  .dim-global{
+    font-weight: bold;
+  }

@@ -1,0 +1,115 @@
+{
+  "success": true,
+  "data": {
+    "quoteNo": "INV-2025-003", 
+    "quoteDate": "2025-02-10", 
+    "location": "경기도 안산시 번영 2로 25", 
+    "currency": "KRW",
+    "paymentStatus": "UNPAID",
+    "notes": "설치 전 안전 점검 필수\n현장 작업 인원 추가 필요",
+    "client": {
+      "name": "세광종합건설 주식회사", 
+      "address": "서울특별시 강남구 테헤란로 231",
+      "bizNo": "456789123",
+      "tel": "02-987-6543",
+      "fax": "02-987-6544",
+      "requester": "세광종합건설 주식회사",
+      "manager": "박민수"
+    },
+    "items": [
+      {
+        "name": "강화유리 자동문 / 2중 도어",
+        "loc1": "롯데시티호텔",
+        "loc2": "본관 1층",
+        "remark": "주출입구",
+        "measuredSizeW": 3200,
+        "measuredSizeH": 2800,
+        "material": "강화유리/스틸",
+        "coating": "투명 클리어",
+        "unitPrice": 3100000,
+        "quantity": 2,
+        "lineAmount": 6200000
+      },
+      {
+        "name": "포켓 단열 스텐자동/15",
+        "loc1": "래미안 서초 스위트",
+        "loc2": "101동",
+        "remark": "공동현관",
+        "measuredSizeW": 4000,
+        "measuredSizeH": 4000,
+        "material": "AL/도장",
+        "coating": "신양 3072(3)",
+        "unitPrice": 2505000,
+        "quantity": 1,
+        "lineAmount": 2505000
+      },
+      {
+        "name": "방화문 세트 (스틸프레임 포함)",
+        "loc1": "한화오벨리스크",
+        "loc2": "타워동",
+        "remark": "비상구",
+        "measuredSizeW": 900,
+        "measuredSizeH": 2100,
+        "material": "방화스틸",
+        "coating": "분체도장(그레이)",
+        "unitPrice": 1500000,
+        "quantity": 3,
+        "lineAmount": 4500000
+      },
+      {
+        "name": "자동 슬라이딩 도어 (센서 포함)",
+        "loc1": "신세계 백화점",
+        "loc2": "정문",
+        "remark": "주출입구",
+        "measuredSizeW": 5000,
+        "measuredSizeH": 2800,
+        "material": "강화유리/알루미늄",
+        "coating": "브론즈",
+        "unitPrice": 4200000,
+        "quantity": 1,
+        "lineAmount": 4200000
+      },
+      {
+        "name": "목재 도어 세트",
+        "loc1": "롯데캐슬 골드",
+        "loc2": "304동",
+        "remark": "세대 현관문",
+        "measuredSizeW": 1000,
+        "measuredSizeH": 2100,
+        "material": "목재",
+        "coating": "오크 무늬",
+        "unitPrice": 1800000,
+        "quantity": 5,
+        "lineAmount": 9000000
+      }
+    ],
+    "subtotal": 6200000,
+    "vat": 620000,
+    "total": 6820000,
+    "verificationNo": "INV-2025-003",
+    "qrPayload": "INV-2025-003",
+    "issuer": {
+      "name": "태광도어",
+      "logoUrl": "/logo.svg",
+      "sealPayload": "https://d2v80xjmx68n4w.cloudfront.net/gigs/rate/qglbM1714385345.png",
+      "address": "경기 안산시 단원구 번영2로 25",
+      "bizNo": "123456789",
+      "representative": "홍길동",
+      "website": "www.tkdoor.kr",
+      "supportEmail": "supports@tkdoor.kr",
+      "supportTel": "031-493-0516"
+    },
+    "payment": {
+      "bank": "국민은행",
+      "accountNo": "78910123456789",
+      "accountName": "태광도어법인(주)",
+      "contact": "박민수"
+    }
+  },
+  "meta": {
+    "version": "v1",
+    "requestId": "uuid-002",
+    "generatedAt": "2025-08-11T08:15:00Z"
+  },
+  "error": null
+}

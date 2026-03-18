@@ -1,0 +1,197 @@
+    :root {
+        --ink: #e9e9ea;
+        --bg: #0f0f10;
+        --panel: #17181a;
+        --line: #2a2a2c;
+    }
+
+    /* 1) 페이지 전체를 정확히 100vh로 만들고, 바깥 스크롤을 완전히 차단 */
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    body {
+        color: var(--ink);
+        background: var(--bg);
+        overflow: hidden;
+        /* 바깥 스크롤 차단 */
+        overscroll-behavior: none;
+        /* iOS/안드 바운스 방지 */
+    }
+
+    /* 2) 루트 래퍼는 정확히 viewport 높이 고정 */
+    .full {
+        height: 100dvh;
+    }
+
+    /* 신형 단위: 주소창 변동에 강함 */
+    @supports not (height: 100dvh) {
+        .full {
+            height: 100vh;
+        }
+    }
+
+    /* 폴백 */
+
+    /* 2분할 그리드 */
+    .split {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 1200px) {
+        .split {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    /* 패널은 내부만 스크롤(필요 시), 바깥은 고정 */
+    .panel {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        /* 부모(.full)의 100% 채움 */
+        border-left: 1px solid var(--line);
+        border-right: 1px solid var(--line);
+        overflow: hidden;
+        /* 패널 바깥 넘침 차단 */
+    }
+
+    .panel .hd {
+        flex: 0 0 auto;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: linear-gradient(#191a1d, #17181a);
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--line);
+        font-weight: 700;
+        letter-spacing: .2px;
+    }
+
+    .panel .bd {
+        flex: 1 1 auto;
+        overflow: auto;
+        /* 내용이 많으면 '패널 내부'에서만 스크롤 */
+        -webkit-overflow-scrolling: touch;
+        padding: 16px;
+        gap: 12px;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    }
+
+    /* 카드형 섹션 */
+    .sheet {
+        background: #111214;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+    }
+
+    .sheet .shd {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        font-weight: 600;
+    }
+
+    .sheet .sbd {
+        padding: 14px;
+    }
+
+    /* 폼 가독성 */
+    .form-label {
+        color: #cfd1d4;
+        font-weight: 600;
+    }
+
+    .form-control,
+    .form-select {
+        background: #0e0f11;
+        color: #e9e9ea;
+        border-color: #2a2a2c;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        box-shadow: none;
+        border-color: #3a86ff;
+    }
+
+    .form-range::-webkit-slider-thumb {
+        background: #0d6efd;
+    }
+
+    .form-check-input {
+        background: #0e0f11;
+        border-color: #2a2a2c;
+    }
+
+    .form-check-input:checked {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    /* 마법사 단계 */
+    .step {
+        display: none;
+    }
+
+    .step.active {
+        display: block;
+    }
+
+    .dots .btn {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 999px;
+        padding: 0;
+    }
+
+    /* SVG 영역(우측 패널에서 높이 100%로 채움) */
+    .stage {
+        background: conic-gradient(from 90deg at 0 0, #141416, #141416) padding-box,
+            repeating-linear-gradient(0deg, #1e1f22, #1e1f22 24px, #1a1b1d 24px, #1a1b1d 48px) border-box;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 8px;
+        flex: 1 1 auto;
+        display: flex;
+        /* 높이 100% 채우기 */
+    }
+
+    svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* 좌우/상하 100% */
+
+    .muted {
+        color: #a1a6ad !important;
+    }
+
+    #svgPane .bd {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #svgPane .stage {
+        flex: 1 1 auto;
+        display: flex;
+        border: 1px solid #2a2a2c;
+        border-radius: 16px;
+        background: #111214;
+    }
+
+    #svgPane svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        touch-action: none;
+    }
+
+    /* 제스처 직접 처리 */

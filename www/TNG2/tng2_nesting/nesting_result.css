@@ -1,0 +1,61 @@
+/* nesting_result.css */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Malgun Gothic',Arial,sans-serif;font-size:12px;background:#fff}
+
+.topbar{
+  position:sticky;top:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 16px;background:#fff;border-bottom:1px solid #ddd
+}
+.topbar-left{display:flex;align-items:center;gap:16px}
+.topbar-left b{font-size:15px;color:#1a73e8}
+.topbar-right{display:flex;gap:8px}
+.btn-secondary{padding:8px 16px;background:#fff;color:#333;border:1px solid #ccc;border-radius:4px;font-weight:700;cursor:pointer}
+.btn-secondary:hover{background:#f5f5f5}
+
+.print-header{display:none;justify-content:space-between;padding:4mm 0;border-bottom:2px solid #000}
+.print-title{font-size:16px;font-weight:700}
+.print-date{font-size:11px}
+
+.info-row{display:flex;gap:24px;padding:8px 16px;background:#f9f9f9;border-bottom:1px solid #eee;font-size:12px}
+
+.summary-box{padding:12px 16px;background:#f5f7fa;border-bottom:1px solid #ddd}
+.summary-table{width:100%;border-collapse:collapse;font-size:11px}
+.summary-table th,.summary-table td{border:1px solid #ddd;padding:4px 8px;text-align:center}
+.summary-table th{background:#e8f0fe}
+
+.sheet-list{padding:16px}
+
+.sheet-card{
+  border:1px solid #ccc;border-radius:8px;margin-bottom:16px;
+  page-break-inside:avoid;break-inside:avoid
+}
+.sheet-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 12px;background:#f0f0f0;border-bottom:1px solid #ddd;
+  font-weight:700;font-size:13px
+}
+.sheet-head .sheet-no{color:#1a73e8}
+.sheet-head .loss-rate{color:#d00}
+
+.canvas-wrap{padding:8px;background:#fafafa}
+.canvas-wrap canvas{width:100%;display:block;border:1px solid #ddd}
+
+.sheet-detail{padding:8px 12px;font-size:11px;border-top:1px solid #eee;background:#fff}
+.detail-title{font-weight:700;margin-bottom:4px}
+.detail-items{display:flex;flex-wrap:wrap;gap:6px}
+.detail-item{background:#e8f0fe;padding:2px 8px;border-radius:3px}
+.detail-loss{margin-top:6px;color:#888}
+.detail-loss span{background:#f0f0f0;padding:2px 6px;border-radius:3px;margin-right:4px}
+
+.footer{display:none;justify-content:space-between;padding:4mm 0;border-top:1px solid #999;font-size:9px;color:#666;margin-top:8mm}
+
+@media print{
+  .no-print{display:none!important}
+  .print-header,.footer{display:flex}
+  body{background:#fff}
+  .info-row{padding:2mm 0}
+  .sheet-list{padding:0}
+  .sheet-card{margin-bottom:8mm;border:1px solid #000}
+  .sheet-card:nth-child(2n){page-break-after:always}
+}

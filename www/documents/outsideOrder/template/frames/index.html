@@ -1,0 +1,98 @@
+
+        <div class="header">
+            <div class="title">프레임</div>
+            <div class="logo">
+                <img src="/documents/outsideOrder/logo.svg" alt="태광도어 로고" style="height:40px;">
+            </div>
+        </div>
+
+        <table class="my-2 print-block">
+            <thead>
+                <tr>
+                    <th style="width:6%;">#</th>
+                    <th class="txt-left">제품명</th>
+                    <th class="txt-left" style="width:14%;">재질</th>
+                    <th class="txt-left" style="width:14%;">도장</th>
+                    <th class="txt-left" style="width:11%;">도어타입</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 1행: 번호(rowspan 유지) + 제품명 + (오른쪽 전체를 감싸는 셀 안에 '위치' 한 줄짜리 독립 테이블) -->
+                <tr>
+                    <td rowspan="5" style="width:6%;">{frames.seq}</td>
+                    <td class="txt-left">{frames.name}</td>
+                    <td class="txt-left">{frames.material}</td>
+                    <td class="txt-left">{frames.coating}</td>
+                    <td class="txt-left">{frames.doorType}</td>
+                </tr>
+
+                <!-- 2행: 헤더 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <thead>
+                                <tr>
+                                    <th style="width:18%;">검측가로</th>
+                                    <th style="width:18%;">검측세로</th>
+                                    <th style="width:18%;">도어높이</th>
+                                    <th style="width:18%;">묻힘</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- 3행: 데이터 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <tbody>
+                                <tr>
+                                    <td style="width:18%;">{frames.measuredW}</td>
+                                    <td style="width:18%;">{frames.measuredH}</td>
+                                    <td style="width:18%;">{frames.doorHeight}</td>
+                                    <td style="width:18%;">{frames.buryDepth}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <!-- 2행: 헤더 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <thead>
+                                <tr>
+                                    <th style="width:18%;">단가</th>
+                                    <th style="width:18%;">수량</th>
+                                    <th style="width:18%;">전체금액</th>
+                                    <th style="width:18%;">할인율</th>
+                                    <th style="width:12%;">할인가</th>
+                                    <th style="width:16%;">최종가 (KRW)</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- 3행: 데이터 라인(독립 표) -->
+                <tr>
+                    <td class="inner-wrap" colspan="7" style="padding:0;">
+                        <table class="inner">
+                            <tbody>
+                                <tr>
+                                    <td style="width:18%;">{frames.unitPrice}</td>
+                                    <td style="width:18%;">{frames.quantity}</td>
+                                    <td style="width:18%;">{frames.grossAmount}</td>
+                                    <td style="width:18%;">{frames.discountRate}%</td>
+                                    <td style="width:12%;">{frames.discountAmount}</td>
+                                    <td style="width:16%;">{frames.finalAmount}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+   

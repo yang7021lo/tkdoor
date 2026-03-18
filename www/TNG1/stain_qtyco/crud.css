@@ -1,0 +1,148 @@
+/* ============================================================
+   CRUD Engine - Common Styles
+   ============================================================ */
+
+/* --- Toolbar --- */
+.crud-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+  font-size: 13px;
+}
+.crud-toolbar-left { display: flex; gap: 6px; align-items: center; }
+.crud-toolbar-right { display: flex; gap: 10px; align-items: center; }
+
+.crud-btn {
+  padding: 5px 14px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.crud-btn:hover { background: #e9ecef; }
+.crud-btn-save { background: #4361ee; color: #fff; border-color: #4361ee; font-weight: 600; }
+.crud-btn-save:hover { background: #3a56d4; }
+.crud-btn-save:disabled { background: #a0aec0; border-color: #a0aec0; cursor: default; }
+.crud-btn-add { color: #059669; border-color: #059669; }
+.crud-btn-add:hover { background: #ecfdf5; }
+.crud-btn-del { color: #dc2626; border-color: #dc2626; }
+.crud-btn-del:hover { background: #fef2f2; }
+
+.crud-dirty-count {
+  font-size: 12px;
+  color: #d97706;
+  font-weight: bold;
+  min-width: 60px;
+}
+
+.crud-search {
+  padding: 4px 8px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  font-size: 12px;
+  width: 180px;
+  font-family: inherit;
+}
+.crud-search:focus { outline: none; border-color: #4361ee; }
+
+/* --- Row Status Column --- */
+.crud-status-new { color: #059669; font-weight: bold; font-size: 11px; }
+.crud-status-mod { color: #d97706; font-weight: bold; font-size: 11px; }
+.crud-status-del { color: #dc2626; font-weight: bold; font-size: 11px; }
+
+/* --- Dirty Cell Highlight --- */
+.crud-cell-dirty {
+  background: #fef9c3 !important;
+  border-left: 2px solid #f59e0b !important;
+}
+
+/* --- New Row Left Border --- */
+.crud-row-new {
+  border-left: 3px solid #059669 !important;
+}
+
+/* --- Deleted Row --- */
+.crud-row-deleted .tabulator-cell {
+  text-decoration: line-through;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* --- Tabulator Overrides --- */
+.tabulator .tabulator-header .tabulator-col {
+  background: #374151;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+}
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable:hover {
+  background: #4b5563;
+}
+.tabulator-row.tabulator-selected {
+  background: #e0e7ff !important;
+}
+.tabulator-cell {
+  font-size: 12px;
+  padding: 3px 6px !important;
+}
+.tabulator-cell.tabulator-editing {
+  background: #fff7ed !important;
+  border: 1px solid #f59e0b !important;
+  padding: 2px 5px !important;
+}
+.tabulator-footer {
+  font-size: 12px;
+}
+
+/* --- Toast Notification --- */
+.crud-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: "Malgun Gothic", sans-serif;
+  z-index: 10000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  animation: crudToastIn 0.3s ease;
+  max-width: 400px;
+}
+.crud-toast.success { background: #d1fae5; color: #065f46; border: 1px solid #34d399; }
+.crud-toast.error   { background: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+.crud-toast.info    { background: #dbeafe; color: #1e40af; border: 1px solid #60a5fa; }
+
+@keyframes crudToastIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Loading Overlay --- */
+.crud-loading {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.75);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-size: 14px;
+  color: #4361ee;
+  font-weight: 600;
+}
+.crud-loading.show { display: flex; }
+
+/* --- Wrapper --- */
+.crud-wrap {
+  position: relative;
+  font-family: "Malgun Gothic", "맑은 고딕", Consolas, sans-serif;
+}

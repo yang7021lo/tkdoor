@@ -1,0 +1,1099 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>보험 가입 마법사 — Bootstrap Wizard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root{
+      --wizard-accent:#0d6efd;
+      --wizard-muted:#adb5bd;
+    }
+    body{background:#f6f7f9;}
+    .stepper{display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
+    .stepItem{display:flex; align-items:center; gap:8px;}
+    .stepBullet{
+      width:28px;height:28px;border-radius:50%;
+      display:inline-grid;place-items:center;
+      border:2px solid var(--wizard-muted); color:var(--wizard-muted);
+      font-weight:600; background:#fff;
+    }
+    .stepItem.active .stepBullet,
+    .stepItem.done .stepBullet{border-color:var(--wizard-accent); color:var(--wizard-accent);}
+    .stepItem.done .stepBullet{background:rgba(13,110,253,.08);}
+    .stepLabel{font-weight:600; color:#495057;}
+    .stepItem:not(.active):not(.done) .stepLabel{color:#7a828a; font-weight:500;}
+    .divider{flex:1;height:2px;background:#e9ecef; min-width:24px; border-radius:999px;}
+    .modal-xl{--bs-modal-width: 980px;}
+    .required::after{content:"*"; color:#dc3545; margin-left:4px; font-weight:700;}
+    .form-help{font-size:.85rem; color:#6c757d;}
+    .tableFixHead{max-height:240px; overflow:auto;}
+    .tableFixHead thead th{position:sticky; top:0; background:#fff; z-index:1;}
+    .cursor-pointer{cursor:pointer;}
+    .sm-label{font-size:.85rem; color:#6c757d;}
+    .mono{font-variant-numeric: tabular-nums;}
+  </style>
+</head>
+<body>
+
+<div class="container py-4">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">보험 가입 마법사 (Bootstrap Wizard)</h1>
+    <div class="d-flex gap-2">
+      <button id="loadDraftBtn" class="btn btn-outline-secondary"><i class="bi bi-cloud-download"></i> 초안 불러오기</button>
+      <button id="startWizardBtn" class="btn btn-primary"><i class="bi bi-magic"></i> 마법사 시작</button>
+    </div>
+  </div>
+
+  <div class="alert alert-secondary">
+    이 예시는 <strong>모달 중심 다단계</strong> 흐름, <strong>camelCase</strong> 변수/함수/ID, <strong>수익자 관리 모달</strong>, <strong>담보 상세 모달</strong>, 
+    <strong>건강고지 추가 모달</strong>, <strong>약관 모달</strong>, <strong>로컬 초안 저장</strong>, <strong>보험료 추정</strong>을 포함합니다.
+  </div>
+</div>
+
+<!-- Wizard Modal -->
+<div class="modal fade" id="applicationWizardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <div class="stepper mb-2" id="stepper">
+            <div class="stepItem active" data-step="0">
+              <span class="stepBullet">1</span><span class="stepLabel">신청인</span>
+            </div><div class="divider"></div>
+            <div class="stepItem" data-step="1">
+              <span class="stepBullet">2</span><span class="stepLabel">담보/플랜</span>
+            </div><div class="divider"></div>
+            <div class="stepItem" data-step="2">
+              <span class="stepBullet">3</span><span class="stepLabel">수익자</span>
+            </div><div class="divider"></div>
+            <div class="stepItem" data-step="3">
+              <span class="stepBullet">4</span><span class="stepLabel">건강고지</span>
+            </div><div class="divider"></div>
+            <div class="stepItem" data-step="4">
+              <span class="stepBullet">5</span><span class="stepLabel">결제</span>
+            </div><div class="divider"></div>
+            <div class="stepItem" data-step="5">
+              <span class="stepBullet">6</span><span class="stepLabel">검토/제출</span>
+            </div>
+          </div>
+          <div class="sm-label">진행 단계: <span id="stepTitle">신청인 정보</span></div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Step 0: Applicant -->
+        <section class="stepPane" data-step="0">
+          <form id="applicantForm" class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label required">성명</label>
+              <input id="applicantName" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label required">생년월일</label>
+              <input id="applicantDob" type="date" class="form-control" required>
+              <div class="form-help">연령은 보험료 추정에 사용됩니다.</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label required">연락처</label>
+              <input id="applicantPhone" class="form-control" placeholder="010-1234-5678" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label required">이메일</label>
+              <input id="applicantEmail" type="email" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">주소</label>
+              <input id="applicantAddress" class="form-control" placeholder="도로명 주소">
+            </div>
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="isSmoker">
+                <label class="form-check-label" for="isSmoker">흡연자 여부</label>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <!-- Step 1: Coverage -->
+        <section class="stepPane d-none" data-step="1">
+          <div class="row g-3">
+            <div class="col-md-5">
+              <label class="form-label required">플랜</label>
+              <div class="list-group" id="planTypeGroup">
+                <label class="list-group-item d-flex align-items-start gap-3 cursor-pointer">
+                  <input class="form-check-input mt-1" type="radio" name="planType" value="term" required>
+                  <div>
+                    <div class="fw-semibold">정기보험</div>
+                    <div class="text-muted">기간 한정 보장, 낮은 보험료</div>
+                  </div>
+                  <button class="btn btn-sm btn-outline-secondary ms-auto" data-bs-toggle="modal" data-bs-target="#coverageDetailModal" data-plan="term">자세히</button>
+                </label>
+                <label class="list-group-item d-flex align-items-start gap-3 cursor-pointer">
+                  <input class="form-check-input mt-1" type="radio" name="planType" value="whole" required>
+                  <div>
+                    <div class="fw-semibold">종신보험</div>
+                    <div class="text-muted">평생 보장, 적립/해지환급금</div>
+                  </div>
+                  <button class="btn btn-sm btn-outline-secondary ms-auto" data-bs-toggle="modal" data-bs-target="#coverageDetailModal" data-plan="whole">자세히</button>
+                </label>
+                <label class="list-group-item d-flex align-items-start gap-3 cursor-pointer">
+                  <input class="form-check-input mt-1" type="radio" name="planType" value="health" required>
+                  <div>
+                    <div class="fw-semibold">건강보험</div>
+                    <div class="text-muted">질병/수술/입원 위주</div>
+                  </div>
+                  <button class="btn btn-sm btn-outline-secondary ms-auto" data-bs-toggle="modal" data-bs-target="#coverageDetailModal" data-plan="health">자세히</button>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <label class="form-label required">가입금액(만원)</label>
+              <div class="input-group">
+                <input id="coverageAmount" type="number" class="form-control mono" min="1000" step="100" value="3000" required>
+                <span class="input-group-text">만원</span>
+              </div>
+
+              <div class="mt-3">
+                <label class="form-label">특약(라이더)</label>
+                <div class="row row-cols-2 g-2">
+                  <div class="col">
+                    <div class="form-check">
+                      <input id="riderAccident" class="form-check-input" type="checkbox">
+                      <label class="form-check-label" for="riderAccident">재해 사망/후유장해</label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input id="riderCi" class="form-check-input" type="checkbox">
+                      <label class="form-check-label" for="riderCi">중대질병(CI)</label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input id="riderHospital" class="form-check-input" type="checkbox">
+                      <label class="form-check-label" for="riderHospital">입원/수술</label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <input id="riderCancer" class="form-check-input" type="checkbox">
+                      <label class="form-check-label" for="riderCancer">암 진단금</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <label class="form-label">납입주기</label>
+                <select id="paymentFrequency" class="form-select">
+                  <option value="monthly">월납</option>
+                  <option value="quarterly">분기납</option>
+                  <option value="yearly">연납</option>
+                </select>
+              </div>
+
+              <div class="mt-3 p-3 rounded border bg-light">
+                <div class="d-flex justify-content-between">
+                  <div>예상 보험료</div>
+                  <div class="fw-bold mono"><span id="premiumPreview">-</span> 원 / <span id="premiumCycleLabel">월</span></div>
+                </div>
+                <div class="form-help">참고용 추정치이며, 인수 심사 결과에 따라 변경될 수 있습니다.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 2: Beneficiaries -->
+        <section class="stepPane d-none" data-step="2">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0">수익자 목록</h6>
+            <div class="d-flex gap-2">
+              <button id="addBeneficiaryBtn" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#beneficiaryModal"><i class="bi bi-person-plus"></i> 추가</button>
+              <button id="autoSplitBtn" class="btn btn-sm btn-outline-secondary">자동 균등 배분</button>
+            </div>
+          </div>
+          <div class="table-responsive tableFixHead">
+            <table class="table table-sm align-middle">
+              <thead>
+                <tr class="text-nowrap">
+                  <th>#</th>
+                  <th>성명</th>
+                  <th>관계</th>
+                  <th class="text-end">지분(%)</th>
+                  <th>연락처</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="beneficiariesTbody">
+                <tr><td colspan="6" class="text-center text-muted py-4">수익자를 추가해주세요.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-text">수익자 지분 합계는 100%여야 합니다.</div>
+        </section>
+
+        <!-- Step 3: Health -->
+        <section class="stepPane d-none" data-step="3">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">최근 5년 내 입원/수술</label>
+              <div class="btn-group w-100" role="group">
+                <input type="radio" class="btn-check" name="recentHospital" id="recentHospitalNo" value="no" checked>
+                <label class="btn btn-outline-secondary" for="recentHospitalNo">아니오</label>
+                <input type="radio" class="btn-check" name="recentHospital" id="recentHospitalYes" value="yes">
+                <label class="btn btn-outline-secondary" for="recentHospitalYes">예</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">만성질환(고혈압/당뇨 등)</label>
+              <div class="btn-group w-100" role="group">
+                <input type="radio" class="btn-check" name="chronicDisease" id="chronicDiseaseNo" value="no" checked>
+                <label class="btn btn-outline-secondary" for="chronicDiseaseNo">아니오</label>
+                <input type="radio" class="btn-check" name="chronicDisease" id="chronicDiseaseYes" value="yes">
+                <label class="btn btn-outline-secondary" for="chronicDiseaseYes">예</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <button id="addHealthDisclosureBtn" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#healthDisclosureModal">
+                <i class="bi bi-journal-plus"></i> 건강고지 상세 추가
+              </button>
+              <div class="mt-2">
+                <ul id="healthList" class="list-group"></ul>
+                <div id="healthEmpty" class="text-muted">등록된 건강고지 내역이 없습니다.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 4: Payment -->
+        <section class="stepPane d-none" data-step="4">
+          <div class="row g-3">
+            <div class="col-md-5">
+              <div class="p-3 border rounded bg-light">
+                <div class="d-flex justify-content-between">
+                  <div>예상 보험료</div>
+                  <div class="fw-bold mono"><span id="premiumConfirm">-</span> 원 / <span id="premiumCycleLabel2">월</span></div>
+                </div>
+                <div class="sm-label">플랜/가입금액/특약/연령/흡연 반영</div>
+              </div>
+              <div class="mt-3">
+                <label class="form-label">자동이체 날짜</label>
+                <select id="autopayDay" class="form-select">
+                  <option value="5">매월 5일</option>
+                  <option value="15" selected>매월 15일</option>
+                  <option value="25">매월 25일</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <ul class="nav nav-tabs" id="paymentTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="cardTab" data-bs-toggle="tab" data-bs-target="#cardPane" type="button" role="tab">신용/체크카드</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="accountTab" data-bs-toggle="tab" data-bs-target="#accountPane" type="button" role="tab">계좌이체</button>
+                </li>
+              </ul>
+              <div class="tab-content border border-top-0 rounded-bottom p-3">
+                <div class="tab-pane fade show active" id="cardPane" role="tabpanel">
+                  <div class="row g-2">
+                    <div class="col-md-7">
+                      <label class="form-label required">카드번호</label>
+                      <input id="cardNumber" class="form-control mono" placeholder="1234 5678 9012 3456" pattern="^(\\d{4} ?){3}\\d{4}$">
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label required">유효기간</label>
+                      <input id="cardExpiry" class="form-control mono" placeholder="MM/YY" pattern="^(0[1-9]|1[0-2])\\/\\d{2}$">
+                    </div>
+                    <div class="col-md-2">
+                      <label class="form-label required">CVC</label>
+                      <input id="cardCvc" class="form-control mono" maxlength="4" pattern="^\\d{3,4}$">
+                    </div>
+                    <div class="col-12">
+                      <div class="form-check">
+                        <input id="sameAsApplicant" class="form-check-input" type="checkbox" checked>
+                        <label class="form-check-label" for="sameAsApplicant">청구지 주소 = 신청인 주소</label>
+                      </div>
+                    </div>
+                    <div class="col-12" id="billingAddressWrap" style="display:none;">
+                      <label class="form-label">청구지 주소</label>
+                      <input id="billingAddress" class="form-control" placeholder="도로명 주소">
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="accountPane" role="tabpanel">
+                  <div class="row g-2">
+                    <div class="col-md-6">
+                      <label class="form-label required">은행</label>
+                      <select id="bankName" class="form-select">
+                        <option value="">선택</option>
+                        <option>국민은행</option><option>신한은행</option><option>우리은행</option><option>하나은행</option><option>농협은행</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label required">계좌번호</label>
+                      <input id="accountNumber" class="form-control mono" placeholder="하이픈 없이">
+                    </div>
+                    <div class="col-md-12">
+                      <label class="form-label required">예금주</label>
+                      <input id="accountHolder" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 5: Review -->
+        <section class="stepPane d-none" data-step="5">
+          <div class="row g-3">
+            <div class="col-lg-7">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <strong>신청 내용 요약</strong>
+                  <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#termsModal">약관 보기</button>
+                </div>
+                <div class="card-body">
+                  <dl class="row mb-0">
+                    <dt class="col-sm-4">신청인</dt>
+                    <dd class="col-sm-8" id="summaryApplicant">-</dd>
+                    <dt class="col-sm-4">플랜/가입금액</dt>
+                    <dd class="col-sm-8" id="summaryPlan">-</dd>
+                    <dt class="col-sm-4">특약</dt>
+                    <dd class="col-sm-8" id="summaryRiders">-</dd>
+                    <dt class="col-sm-4">수익자</dt>
+                    <dd class="col-sm-8" id="summaryBeneficiaries">-</dd>
+                    <dt class="col-sm-4">건강고지</dt>
+                    <dd class="col-sm-8" id="summaryHealth">-</dd>
+                    <dt class="col-sm-4">결제/주기</dt>
+                    <dd class="col-sm-8" id="summaryPayment">-</dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="p-3 border rounded bg-light">
+                <div class="d-flex justify-content-between">
+                  <div>최종 예상 보험료</div>
+                  <div class="fw-bold mono fs-5"><span id="premiumFinal">-</span> 원 / <span id="premiumCycleLabel3">월</span></div>
+                </div>
+                <div class="form-check mt-3">
+                  <input id="agreeTerms" class="form-check-input" type="checkbox">
+                  <label class="form-check-label" for="agreeTerms">약관 및 개인정보 수집·이용에 동의합니다.</label>
+                </div>
+                <div class="d-grid gap-2 mt-3">
+                  <button id="submitApplicationBtn" class="btn btn-primary btn-lg" disabled><i class="bi bi-send-check"></i> 신청서 제출</button>
+                  <button id="saveDraftBtn" class="btn btn-outline-secondary"><i class="bi bi-cloud-upload"></i> 초안 저장</button>
+                  <button id="printSummaryBtn" class="btn btn-outline-dark"><i class="bi bi-printer"></i> 요약 인쇄</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="modal-footer">
+        <button id="prevStepBtn" class="btn btn-outline-secondary" disabled><i class="bi bi-arrow-left"></i> 이전</button>
+        <button id="nextStepBtn" class="btn btn-primary">다음 <i class="bi bi-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Beneficiary Modal -->
+<div class="modal fade" id="beneficiaryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <form id="beneficiaryForm" class="modal-content needs-validation" novalidate>
+      <div class="modal-header">
+        <h5 class="modal-title" id="beneficiaryModalTitle">수익자 추가</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <input type="hidden" id="beneficiaryIndex">
+        <div class="col-md-6">
+          <label class="form-label required">성명</label>
+          <input id="beneficiaryName" class="form-control" required>
+          <div class="invalid-feedback">성명을 입력하세요.</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label required">관계</label>
+          <input id="beneficiaryRelation" class="form-control" list="relationList" placeholder="배우자, 자녀 등" required>
+          <datalist id="relationList">
+            <option>배우자</option><option>자녀</option><option>부</option><option>모</option><option>형제자매</option><option>기타</option>
+          </datalist>
+          <div class="invalid-feedback">관계를 입력하세요.</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label required">지분(%)</label>
+          <input id="beneficiaryShare" type="number" class="form-control mono" min="1" max="100" required>
+          <div class="invalid-feedback">1~100 사이로 입력하세요.</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">연락처</label>
+          <input id="beneficiaryPhone" class="form-control" placeholder="010-0000-0000" pattern="^0\\d{1,2}-\\d{3,4}-\\d{4}$">
+          <div class="form-text">형식 예: 010-1234-5678</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button id="saveBeneficiaryBtn" class="btn btn-primary" type="submit">저장</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Coverage Detail Modal -->
+<div class="modal fade" id="coverageDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">담보 상세</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-pills mb-3" id="coveragePills" role="tablist">
+          <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pillOverview" type="button">개요</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#pillRiders" type="button">특약</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#pillLimits" type="button">면책/제한</button></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="pillOverview">
+            <div id="coverageOverview">플랜을 선택하면 개요가 표시됩니다.</div>
+          </div>
+          <div class="tab-pane fade" id="pillRiders">
+            <ul class="list-group">
+              <li class="list-group-item">재해 사망/후유장해: 재해로 인한 손해 보장</li>
+              <li class="list-group-item">중대질병(CI): 암/뇌/심장 등 중대질환 진단금</li>
+              <li class="list-group-item">입원/수술: 입원일당 및 수술비</li>
+              <li class="list-group-item">암 진단금: 암 확정 진단 시 일시금</li>
+            </ul>
+          </div>
+          <div class="tab-pane fade" id="pillLimits">
+            <p class="mb-1">주요 면책/제한 예시</p>
+            <ul>
+              <li>고의, 불법행위, 범죄행위 등</li>
+              <li>계약 전 이미 존재한 질병 또는 면책기간 중 발생</li>
+              <li>약관에 규정된 특정 위험</li>
+            </ul>
+            <div class="form-text">정확한 사항은 상품 약관을 따릅니다.</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Health Disclosure Modal -->
+<div class="modal fade" id="healthDisclosureModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="healthForm" class="modal-content needs-validation" novalidate>
+      <div class="modal-header">
+        <h5 class="modal-title">건강고지 상세</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <div class="col-md-7">
+          <label class="form-label required">질병/증상명</label>
+          <input id="healthCondition" class="form-control" required>
+          <div class="invalid-feedback">질병/증상명을 입력하세요.</div>
+        </div>
+        <div class="col-md-5">
+          <label class="form-label required">진단(년-월)</label>
+          <input id="healthSince" type="month" class="form-control" required>
+          <div class="invalid-feedback">진단 시점을 입력하세요.</div>
+        </div>
+        <div class="col-12">
+          <label class="form-label">치료 내용</label>
+          <textarea id="healthTreatment" class="form-control" rows="3" placeholder="치료/복용/수술 등"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button class="btn btn-primary" type="submit">추가</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">약관 및 개인정보 처리방침 (요약)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+        <h6>1. 목적</h6>
+        <p>보험계약 체결/유지/이행/관리 및 고객 상담을 위한 정보 수집·이용에 동의합니다.</p>
+        <h6>2. 수집 항목</h6>
+        <ul>
+          <li>식별정보(성명, 연락처, 주소, 이메일 등)</li>
+          <li>계약정보(플랜, 가입금액, 수익자, 결제정보 등)</li>
+          <li>건강정보(건강고지 항목 등)</li>
+        </ul>
+        <h6>3. 보유 기간</h6>
+        <p>관계 법령 및 회사 내부 규정에 따릅니다.</p>
+        <h6>4. 동의 철회</h6>
+        <p>고객센터를 통해 언제든지 처리 가능합니다.</p>
+        <div class="alert alert-secondary">본 요약은 이해를 돕기 위한 것으로, 상세한 내용은 전자 약관 전문을 확인해 주세요.</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+  <div id="toastContainer"></div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // -----------------------------
+  // State
+  // -----------------------------
+  const appState = {
+    currentStepIndex: 0,
+    applicant: {
+      name: "",
+      dob: "",
+      phone: "",
+      email: "",
+      address: "",
+      isSmoker: false
+    },
+    coverage: {
+      planType: "",
+      coverageAmount: 3000, // 만원
+      riders: {
+        accident:false, ci:false, hospital:false, cancer:false
+      },
+      paymentFrequency: "monthly"
+    },
+    beneficiaries: [], // {name, relation, share, phone}
+    healthDisclosures: [], // {condition, since, treatment}
+    payment: {
+      method: "card", // card | account
+      cardNumber: "", cardExpiry: "", cardCvc: "",
+      sameAsApplicant: true, billingAddress: "",
+      bankName: "", accountNumber: "", accountHolder: "",
+      autopayDay: "15"
+    }
+  };
+
+  // -----------------------------
+  // Helpers
+  // -----------------------------
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+  function showToast(message, variant="primary"){
+    const id = "t"+Date.now();
+    const html = `
+      <div class="toast align-items-center text-bg-${variant} border-0 mb-2" id="${id}" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">${message}</div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>`;
+    $("#toastContainer").insertAdjacentHTML("beforeend", html);
+    const toast = new bootstrap.Toast(document.getElementById(id), { delay: 2500 });
+    toast.show();
+  }
+
+  function formatCurrencyKRW(n){
+    if(n==null || isNaN(n)) return "-";
+    return Number(n).toLocaleString("ko-KR");
+  }
+
+  function calcAge(dobStr){
+    if(!dobStr) return 0;
+    const dob = new Date(dobStr);
+    if (isNaN(dob)) return 0;
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+    return Math.max(age, 0);
+  }
+
+  function computePremium(){
+    // 간단한 예시 요율 모델
+    const age = calcAge(appState.applicant.dob);
+    const basePerTenThousand = {
+      term:   130,  // 정기보험: 낮음
+      whole:  220,  // 종신보험: 높음
+      health: 160   // 건강보험: 중간
+    };
+    const plan = appState.coverage.planType || "term";
+    const amount = Number(appState.coverage.coverageAmount) || 0; // 만원
+    const riderFactor =
+      (appState.coverage.riders.accident ? 0.06 : 0) +
+      (appState.coverage.riders.ci       ? 0.12 : 0) +
+      (appState.coverage.riders.hospital ? 0.08 : 0) +
+      (appState.coverage.riders.cancer   ? 0.10 : 0);
+    const smokerFactor = appState.applicant.isSmoker ? 0.15 : 0;
+    const ageFactor = age <= 25 ? -0.05 : age <= 40 ? 0.0 : age <= 55 ? 0.08 : 0.20;
+
+    const perUnit = basePerTenThousand[plan] * (1 + riderFactor + smokerFactor + ageFactor);
+    // 월 기준 산출
+    let monthly = perUnit * (amount/1000); // 단위 스케일링
+    monthly = Math.max(Math.round(monthly/10)*10, 5000); // 최저 5,000원, 10원단위 반올림
+
+    let value = monthly;
+    const freq = appState.coverage.paymentFrequency;
+    if (freq === "quarterly") value = monthly * 3 * 0.99;  // 분기 소폭 할인
+    if (freq === "yearly")    value = monthly * 12 * 0.97; // 연납 할인
+
+    return Math.round(value);
+  }
+
+  function updatePremiumUI(){
+    const v = computePremium();
+    const freq = appState.coverage.paymentFrequency;
+    const label = freq==="monthly" ? "월" : (freq==="quarterly" ? "분기" : "년");
+    $("#premiumPreview").textContent = formatCurrencyKRW(v);
+    $("#premiumCycleLabel").textContent = label;
+    $("#premiumConfirm").textContent = formatCurrencyKRW(v);
+    $("#premiumCycleLabel2").textContent = label;
+    $("#premiumFinal").textContent = formatCurrencyKRW(v);
+    $("#premiumCycleLabel3").textContent = label;
+  }
+
+  function goToStep(step){
+    appState.currentStepIndex = step;
+    $$(".stepPane").forEach(p => p.classList.toggle("d-none", Number(p.dataset.step)!==step));
+    const titles = ["신청인 정보","담보/플랜 선택","수익자 지정","건강고지","결제 정보","검토/제출"];
+    $("#stepTitle").textContent = titles[step] || "";
+    $("#prevStepBtn").disabled = step===0;
+    $("#nextStepBtn").textContent = step===5 ? "완료" : "다음 ";
+    if(step===5){ refreshSummary(); }
+    // stepper 상태
+    $$("#stepper .stepItem").forEach((el,i)=>{
+      el.classList.toggle("active", i===step);
+      el.classList.toggle("done", i<step);
+    });
+  }
+
+  function validateStep(step){
+    if(step===0){
+      // Applicant
+      appState.applicant.name = $("#applicantName").value.trim();
+      appState.applicant.dob = $("#applicantDob").value;
+      appState.applicant.phone = $("#applicantPhone").value.trim();
+      appState.applicant.email = $("#applicantEmail").value.trim();
+      appState.applicant.address = $("#applicantAddress").value.trim();
+      appState.applicant.isSmoker = $("#isSmoker").checked;
+
+      if(!$("#applicantForm").checkValidity()){
+        $("#applicantForm").classList.add("was-validated");
+        showToast("신청인 정보를 확인해 주세요.", "danger");
+        return false;
+      }
+      return true;
+    }
+    if(step===1){
+      const plan = $("input[name='planType']:checked");
+      if(!plan){
+        showToast("플랜을 선택하세요.", "danger");
+        return false;
+      }
+      appState.coverage.planType = plan.value;
+      appState.coverage.coverageAmount = Number($("#coverageAmount").value || 0);
+      appState.coverage.riders.accident = $("#riderAccident").checked;
+      appState.coverage.riders.ci       = $("#riderCi").checked;
+      appState.coverage.riders.hospital = $("#riderHospital").checked;
+      appState.coverage.riders.cancer   = $("#riderCancer").checked;
+      appState.coverage.paymentFrequency = $("#paymentFrequency").value;
+      if(appState.coverage.coverageAmount < 1000){
+        showToast("가입금액은 최소 1,000만원 이상이어야 합니다.", "danger");
+        return false;
+      }
+      return true;
+    }
+    if(step===2){
+      const sumShare = appState.beneficiaries.reduce((a,b)=>a+Number(b.share||0),0);
+      if(appState.beneficiaries.length===0){
+        showToast("수익자를 1명 이상 등록하세요.", "danger");
+        return false;
+      }
+      if(sumShare!==100){
+        showToast("수익자 지분 합계는 100%가 되어야 합니다.", "danger");
+        return false;
+      }
+      return true;
+    }
+    if(step===3){
+      // 최소 조건 없음(고지 선택적으로)
+      return true;
+    }
+    if(step===4){
+      const activeTab = $(".tab-pane.active")?.id;
+      appState.payment.autopayDay = $("#autopayDay").value;
+      if(activeTab==="cardPane"){
+        appState.payment.method = "card";
+        appState.payment.cardNumber = $("#cardNumber").value.trim();
+        appState.payment.cardExpiry = $("#cardExpiry").value.trim();
+        appState.payment.cardCvc    = $("#cardCvc").value.trim();
+        appState.payment.sameAsApplicant = $("#sameAsApplicant").checked;
+        appState.payment.billingAddress = $("#billingAddress").value.trim();
+
+        if(!/^(\\d{4} ?){3}\\d{4}$/.test(appState.payment.cardNumber)){
+          showToast("카드 정보를 정확히 입력하세요.", "danger");
+          return false;
+        }
+      }else{
+        appState.payment.method = "account";
+        appState.payment.bankName = $("#bankName").value;
+        appState.payment.accountNumber = $("#accountNumber").value.trim();
+        appState.payment.accountHolder = $("#accountHolder").value.trim();
+        if(!appState.payment.bankName || !appState.payment.accountNumber || !appState.payment.accountHolder){
+          showToast("계좌이체 정보를 입력하세요.", "danger");
+          return false;
+        }
+      }
+      return true;
+    }
+    return true;
+  }
+
+  function refreshSummary(){
+    const a = appState.applicant;
+    $("#summaryApplicant").textContent =
+      `${a.name} / ${a.email} / ${a.phone}${a.address? " / "+a.address:""} / 흡연:${a.isSmoker?"예":"아니오"}`;
+
+    const c = appState.coverage;
+    const planLabel = c.planType==="term"?"정기보험":(c.planType==="whole"?"종신보험":"건강보험");
+    $("#summaryPlan").textContent = `${planLabel}, 가입금액 ${formatCurrencyKRW(c.coverageAmount)}만원`;
+
+    const riders = [];
+    if(c.riders.accident) riders.push("재해");
+    if(c.riders.ci) riders.push("CI");
+    if(c.riders.hospital) riders.push("입원/수술");
+    if(c.riders.cancer) riders.push("암");
+    $("#summaryRiders").textContent = riders.length ? riders.join(", ") : "없음";
+
+    if(appState.beneficiaries.length){
+      $("#summaryBeneficiaries").textContent = appState.beneficiaries.map((b,i)=>`${i+1}. ${b.name}(${b.relation}) ${b.share}%`).join(" | ");
+    }else{
+      $("#summaryBeneficiaries").textContent = "없음";
+    }
+
+    if(appState.healthDisclosures.length){
+      $("#summaryHealth").textContent = appState.healthDisclosures.map(h=>`${h.condition}(${h.since})`).join(", ");
+    }else{
+      $("#summaryHealth").textContent = "없음";
+    }
+
+    const freq = appState.coverage.paymentFrequency;
+    const freqLabel = freq==="monthly"?"월납":(freq==="quarterly"?"분기납":"연납");
+    const pay = appState.payment.method==="card"
+      ? `카드(끝 ${appState.payment.cardNumber.slice(-4)})`
+      : `계좌(${appState.payment.bankName})`;
+    $("#summaryPayment").textContent = `${pay}, ${freqLabel}, 이체일 ${appState.payment.autopayDay}일`;
+    updatePremiumUI();
+
+    // 제출 버튼 활성화 조건
+    $("#submitApplicationBtn").disabled = !$("#agreeTerms").checked;
+  }
+
+  function renderBeneficiaries(){
+    const tbody = $("#beneficiariesTbody");
+    tbody.innerHTML = "";
+    if(appState.beneficiaries.length===0){
+      tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-4">수익자를 추가해주세요.</td></tr>`;
+      return;
+    }
+    appState.beneficiaries.forEach((b,idx)=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${idx+1}</td>
+        <td>${b.name}</td>
+        <td>${b.relation}</td>
+        <td class="text-end mono">${b.share}%</td>
+        <td>${b.phone||"-"}</td>
+        <td class="text-end">
+          <button class="btn btn-sm btn-outline-secondary me-1" data-action="edit" data-index="${idx}"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-sm btn-outline-danger" data-action="remove" data-index="${idx}"><i class="bi bi-trash"></i></button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderHealthList(){
+    const list = $("#healthList");
+    list.innerHTML = "";
+    if(appState.healthDisclosures.length===0){
+      $("#healthEmpty").style.display = "";
+      return;
+    }
+    $("#healthEmpty").style.display = "none";
+    appState.healthDisclosures.forEach((h,idx)=>{
+      const li = document.createElement("li");
+      li.className = "list-group-item d-flex justify-content-between align-items-start";
+      li.innerHTML = `
+        <div>
+          <div class="fw-semibold">${h.condition} <span class="text-muted">(${h.since})</span></div>
+          <div class="text-muted">${h.treatment || "치료내용 없음"}</div>
+        </div>
+        <button class="btn btn-sm btn-outline-danger" data-action="removeHealth" data-index="${idx}"><i class="bi bi-x-lg"></i></button>`;
+      list.appendChild(li);
+    });
+  }
+
+  function saveDraftToLocal(){
+    localStorage.setItem("insuranceWizardDraft", JSON.stringify(appState));
+    showToast("초안을 저장했습니다.", "success");
+  }
+
+  function loadDraftFromLocal(){
+    const raw = localStorage.getItem("insuranceWizardDraft");
+    if(!raw){ showToast("저장된 초안이 없습니다.", "warning"); return; }
+    try{
+      const data = JSON.parse(raw);
+      Object.assign(appState, data);
+
+      // 폼/UI 반영 (핵심만)
+      $("#applicantName").value = appState.applicant.name || "";
+      $("#applicantDob").value = appState.applicant.dob || "";
+      $("#applicantPhone").value = appState.applicant.phone || "";
+      $("#applicantEmail").value = appState.applicant.email || "";
+      $("#applicantAddress").value = appState.applicant.address || "";
+      $("#isSmoker").checked = !!appState.applicant.isSmoker;
+
+      if(appState.coverage.planType){
+        const radio = document.querySelector(`input[name='planType'][value='${appState.coverage.planType}']`);
+        if(radio) radio.checked = true;
+      }
+      $("#coverageAmount").value = appState.coverage.coverageAmount ?? 3000;
+      $("#riderAccident").checked = !!appState.coverage.riders.accident;
+      $("#riderCi").checked = !!appState.coverage.riders.ci;
+      $("#riderHospital").checked = !!appState.coverage.riders.hospital;
+      $("#riderCancer").checked = !!appState.coverage.riders.cancer;
+      $("#paymentFrequency").value = appState.coverage.paymentFrequency || "monthly";
+
+      renderBeneficiaries();
+      renderHealthList();
+      updatePremiumUI();
+
+      showToast("초안을 불러왔습니다.", "success");
+    }catch(e){
+      console.error(e);
+      showToast("초안 불러오기 실패", "danger");
+    }
+  }
+
+  // -----------------------------
+  // Event Bindings
+  // -----------------------------
+  document.addEventListener("DOMContentLoaded", ()=>{
+    // 시작
+    $("#startWizardBtn").addEventListener("click", ()=>{
+      new bootstrap.Modal("#applicationWizardModal").show();
+      goToStep(0);
+      updatePremiumUI();
+    });
+
+    // 초안 로딩 버튼
+    $("#loadDraftBtn").addEventListener("click", loadDraftFromLocal);
+
+    // 다음/이전
+    $("#nextStepBtn").addEventListener("click", ()=>{
+      const i = appState.currentStepIndex;
+      if(!validateStep(i)) return;
+      if(i<5){ goToStep(i+1); }
+      else{
+        // 완료 버튼
+        if(!$("#agreeTerms").checked){
+          showToast("약관 동의가 필요합니다.", "danger");
+          return;
+        }
+        showToast("신청서가 제출되었습니다. 감사합니다.", "success");
+        bootstrap.Modal.getInstance($("#applicationWizardModal"))?.hide();
+      }
+    });
+    $("#prevStepBtn").addEventListener("click", ()=>{
+      const i = appState.currentStepIndex;
+      if(i>0) goToStep(i-1);
+    });
+
+    // Payment UI 연동
+    $("#paymentFrequency").addEventListener("change", ()=>{
+      appState.coverage.paymentFrequency = $("#paymentFrequency").value;
+      updatePremiumUI();
+    });
+    $("#coverageAmount").addEventListener("input", ()=>{
+      appState.coverage.coverageAmount = Number($("#coverageAmount").value||0);
+      updatePremiumUI();
+    });
+    $("#isSmoker").addEventListener("change", ()=>{
+      appState.applicant.isSmoker = $("#isSmoker").checked;
+      updatePremiumUI();
+    });
+    $$("#riderAccident,#riderCi,#riderHospital,#riderCancer").forEach(el=>{
+      el.addEventListener("change", ()=>{ 
+        appState.coverage.riders[el.id.replace("rider","").toLowerCase()] = el.checked;
+        updatePremiumUI();
+      });
+    });
+
+    // 결제 탭/주소 동기화
+    $("#sameAsApplicant").addEventListener("change", (e)=>{
+      const on = e.target.checked;
+      $("#billingAddressWrap").style.display = on ? "none" : "";
+      if(!on) $("#billingAddress").value = appState.applicant.address || "";
+    });
+
+    // 수익자 테이블 액션
+    $("#beneficiariesTbody").addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-action]");
+      if(!btn) return;
+      const idx = Number(btn.dataset.index);
+      if(btn.dataset.action==="edit"){
+        const b = appState.beneficiaries[idx];
+        $("#beneficiaryModalTitle").textContent = "수익자 수정";
+        $("#beneficiaryIndex").value = idx;
+        $("#beneficiaryName").value = b.name;
+        $("#beneficiaryRelation").value = b.relation;
+        $("#beneficiaryShare").value = b.share;
+        $("#beneficiaryPhone").value = b.phone || "";
+        new bootstrap.Modal("#beneficiaryModal").show();
+      }else if(btn.dataset.action==="remove"){
+        appState.beneficiaries.splice(idx,1);
+        renderBeneficiaries();
+      }
+    });
+
+    // 수익자 자동 균등 배분
+    $("#autoSplitBtn").addEventListener("click", ()=>{
+      const n = appState.beneficiaries.length;
+      if(n===0){ showToast("수익자를 먼저 추가하세요.", "warning"); return; }
+      const base = Math.floor(100/n);
+      let rem = 100 - base*n;
+      appState.beneficiaries = appState.beneficiaries.map((b,i)=>({
+        ...b, share: base + (i<rem?1:0)
+      }));
+      renderBeneficiaries();
+    });
+
+    // 수익자 저장
+    $("#beneficiaryForm").addEventListener("submit", (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      const form = e.target;
+      if(!form.checkValidity()){
+        form.classList.add("was-validated");
+        return;
+      }
+      const idx = $("#beneficiaryIndex").value;
+      const entry = {
+        name: $("#beneficiaryName").value.trim(),
+        relation: $("#beneficiaryRelation").value.trim(),
+        share: Number($("#beneficiaryShare").value),
+        phone: $("#beneficiaryPhone").value.trim()
+      };
+      if(idx===""){
+        appState.beneficiaries.push(entry);
+      }else{
+        appState.beneficiaries[Number(idx)] = entry;
+      }
+      renderBeneficiaries();
+      bootstrap.Modal.getInstance($("#beneficiaryModal"))?.hide();
+      $("#beneficiaryForm").reset();
+      $("#beneficiaryIndex").value = "";
+      $("#beneficiaryForm").classList.remove("was-validated");
+    });
+
+    // 건강고지 추가
+    $("#healthForm").addEventListener("submit", (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      const form = e.target;
+      if(!form.checkValidity()){
+        form.classList.add("was-validated");
+        return;
+      }
+      appState.healthDisclosures.push({
+        condition: $("#healthCondition").value.trim(),
+        since: $("#healthSince").value,
+        treatment: $("#healthTreatment").value.trim()
+      });
+      renderHealthList();
+      bootstrap.Modal.getInstance($("#healthDisclosureModal"))?.hide();
+      form.reset();
+      form.classList.remove("was-validated");
+    });
+    // 건강고지 삭제
+    $("#healthList").addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-action='removeHealth']");
+      if(!btn) return;
+      const idx = Number(btn.dataset.index);
+      appState.healthDisclosures.splice(idx,1);
+      renderHealthList();
+    });
+
+    // 플랜 상세 모달 컨텐츠 주입
+    $("#coverageDetailModal").addEventListener("show.bs.modal", (e)=>{
+      const plan = e.relatedTarget?.dataset.plan || appState.coverage.planType || "term";
+      const map = {
+        term: "<strong>정기보험</strong>: 일정 기간 보장, 낮은 보험료, 갱신/재가입 유연.",
+        whole:"<strong>종신보험</strong>: 평생 보장, 해지환급금/적립 기능, 장기 보장.",
+        health:"<strong>건강보험</strong>: 질병/입원/수술 보장 강화, 특약 구성 유연."
+      };
+      $("#coverageOverview").innerHTML = map[plan];
+    });
+
+    // 약관 동의/제출 버튼 상태
+    $("#agreeTerms").addEventListener("change", ()=>refreshSummary());
+
+    // 요약 인쇄
+    $("#printSummaryBtn").addEventListener("click", ()=>{
+      window.print();
+    });
+
+    // 최종 제출
+    $("#submitApplicationBtn").addEventListener("click", ()=>{
+      // 실제로는 서버 전송 로직 필요
+      console.log("submit payload:", JSON.stringify(appState, null, 2));
+      showToast("제출 완료! 접수 번호가 곧 안내됩니다.", "success");
+    });
+
+    // 초안 저장
+    $("#saveDraftBtn").addEventListener("click", saveDraftToLocal);
+
+    // 스텝 클릭 이동(선행 스텝 유효 시에만 허용)
+    $$("#stepper .stepItem").forEach(item=>{
+      item.addEventListener("click", ()=>{
+        const target = Number(item.dataset.step);
+        // 간단한 가드: 뒤로 가기는 허용, 앞으로는 현재 스텝 검사
+        if(target <= appState.currentStepIndex){ goToStep(target); return; }
+        // 앞으로 이동하려면 현재 스텝 검증
+        if(validateStep(appState.currentStepIndex)) goToStep(target);
+      });
+    });
+
+    // 초기 프리미엄 표시
+    updatePremiumUI();
+
+    // 카드/계좌 탭 전환 시 결제 방식 상태 반영
+    $("#paymentTab").addEventListener("shown.bs.tab", (e)=>{
+      const id = e.target.id;
+      appState.payment.method = id==="cardTab" ? "card" : "account";
+    });
+  });
+</script>
+</body>
+</html>

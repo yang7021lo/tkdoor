@@ -1,0 +1,156 @@
+{
+  "quoteNo": "INV-2024-052",
+  "options": [
+    {
+      "seq": 1,
+      "sjsidx": 12,
+      "name": "일반 AL프레임 120X45",
+      "redivision": {
+        "enabled": true,
+        "unitPrice": 100000,
+        "quantity": 2,
+        "total": 200000
+      },
+      "lobbyPhone": {
+        "enabled": true,
+        "unitPrice": 100000,
+        "quantity": 2,
+        "total": 200000
+      },
+      "protectiveMaterial": {
+        "enabled": true,
+        "unitPrice": 100000,
+        "quantity": 2,
+        "total": 200000
+      },
+      "bottomRail": {
+        "enabled": true,
+        "unitPrice": 100000,
+        "quantity": 2,
+        "total": 200000
+      },
+      "finalAmount": 800000
+    },
+    {
+      "seq": 2,
+      "sjsidx": 13,
+      "name": "강화유리 도어 세트",
+      "redivision": {
+        "enabled": false,
+        "unitPrice": 0,
+        "quantity": 0,
+        "total": 0
+      },
+      "lobbyPhone": {
+        "enabled": true,
+        "unitPrice": 150000,
+        "quantity": 1,
+        "total": 150000
+      },
+      "protectiveMaterial": {
+        "enabled": false,
+        "unitPrice": 0,
+        "quantity": 0,
+        "total": 0
+      },
+      "bottomRail": {
+        "enabled": true,
+        "unitPrice": 80000,
+        "quantity": 1,
+        "total": 80000
+      },
+      "finalAmount": 230000
+    },
+    {
+      "seq": 3,
+      "name": "방화문 스틸도어",
+      "redivision": {
+        "enabled": true,
+        "unitPrice": 120000,
+        "quantity": 1,
+        "total": 120000
+      },
+      "lobbyPhone": {
+        "enabled": false,
+        "unitPrice": 0,
+        "quantity": 0,
+        "total": 0
+      },
+      "protectiveMaterial": {
+        "enabled": true,
+        "unitPrice": 60000,
+        "quantity": 2,
+        "total": 120000
+      },
+      "bottomRail": {
+        "enabled": false,
+        "unitPrice": 0,
+        "quantity": 0,
+        "total": 0
+      },
+      "finalAmount": 240000
+    },
+    {
+      "seq": 4,
+      "name": "슬라이딩 유리도어",
+      "redivision": {
+        "enabled": false,
+        "unitPrice": 0,
+        "quantity": 0,
+        "total": 0
+      },
+      "lobbyPhone": {
+        "enabled": true,
+        "unitPrice": 200000,
+        "quantity": 1,
+        "total": 200000
+      },
+      "protectiveMaterial": {
+        "enabled": true,
+        "unitPrice": 90000,
+        "quantity": 1,
+        "total": 90000
+      },
+      "bottomRail": {
+        "enabled": true,
+        "unitPrice": 100000,
+        "quantity": 2,
+        "total": 200000
+      },
+      "finalAmount": 490000
+    },
+    {
+      "seq": 5,
+      "name": "목재 무늬 도어",
+      "redivision": {
+        "enabled": true,
+        "unitPrice": 110000,
+        "quantity": 1,
+        "total": 110000
+      },
+      "lobbyPhone": {
+        "enabled": false,
+        "unitPrice": 0,
+        "quantity": 0,
+        "total": 0
+      },
+      "protectiveMaterial": {
+        "enabled": false,
+        "unitPrice": 0,
+        "quantity": 0,
+        "total": 0
+      },
+      "bottomRail": {
+        "enabled": true,
+        "unitPrice": 120000,
+        "quantity": 1,
+        "total": 120000
+      },
+      "finalAmount": 230000
+    }
+  ],
+  "meta": {
+    "generatedAt": "2025-08-11T16:00:00+09:00",
+    "source": "manual-entry"
+  }
+}
