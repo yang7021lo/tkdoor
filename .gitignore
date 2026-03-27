@@ -19,6 +19,9 @@ www/img/
 *.exe
 *.pkg
 
+# Claude Code
+.mcp.json
+
 # Temp
 *.tmp
 *.bak

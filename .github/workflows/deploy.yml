@@ -22,3 +22,8 @@ jobs:
           local-dir: ./www/
           server-dir: /www/
           protocol: ftp
+          dangerous-clean-slate: false
+          exclude: |
+            img/**
+            *.exe
+            *.pkg
